@@ -1,0 +1,402 @@
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+import React from 'react';
+import { 
+  History, 
+  Award, 
+  Heart, 
+  BookOpen, 
+  Compass, 
+  Sparkles, 
+  Flame, 
+  ChevronRight,
+  Anchor,
+  UserCheck
+} from 'lucide-react';
+
+import thereseImg from '../assets/images/st_therese_of_lisieux_1780072293326.png';
+import missionBoxImg from '../assets/images/cml_mission_box_1780076662453.png';
+import founderPriestImg from '../assets/images/founder_priest_1780076622051.png';
+import founderLaymanImg from '../assets/images/founder_layman_1780076640521.png';
+
+export default function HistoryView() {
+  const milestones = [
+    {
+      year: '1947',
+      title: 'Foundation of Cherupushpa Mission League',
+      subtitle: 'October 3, Bharananganam, Kerala',
+      desc: 'The Cherupushpa Mission League (CML) was established in Bharananganam, Kottayam, on the auspicious feast day of its patroness, Saint Thérèse of Lisieux (Cherupushpam). Aiming to inspire missionary vigor among laymen and youngsters, local priest Fr. Joseph Maliparambil and lay champion Mr. P. C. Abraham Padinjareattel gathered 7 eager children to light the missionary fire.',
+      icon: <Heart className="w-5 h-5 text-rose-600" />,
+      tag: 'The Birth',
+      bgGradient: 'from-rose-50/50 via-white to-white border-rose-200/65'
+    },
+    {
+      year: '1948',
+      title: 'Papal Blessings by Pope Pius XII',
+      subtitle: 'Worldwide Apostolic Seal',
+      desc: 'Recognizing the highly innovative approach of making children active ambassadors of Christ rather than passive recipients, Fr. Joseph Maliparambil presented CML\'s Constitution to Pope Pius XII in Rome. The Pope personally blessed and endorsed the Constitution, fueling rapid nationwide expansion.',
+      icon: <Award className="w-5 h-5 text-amber-600" />,
+      tag: 'Papal Seal',
+      bgGradient: 'from-amber-50/50 via-white to-white border-amber-200/65'
+    },
+    {
+      year: '1955',
+      title: 'Integration in Syro-Malabar Parishes',
+      subtitle: 'Statewide Evangelization Surge',
+      desc: 'CML became an indispensable pillar of Kerala\'s Syro-Malabar parishes. Millions of catechism children were gifted the famous "Mission Boxes" (മിഷണറി പെട്ടി) to save pocket money through simple daily sacrifices, providing critical aid to remote global missions and promoting indigenous vocations.',
+      icon: <Compass className="w-5 h-5 text-emerald-600" />,
+      tag: 'Rapid Expansion',
+      bgGradient: 'from-emerald-50/50 via-white to-white border-emerald-200/65'
+    },
+    {
+      year: '1970',
+      title: 'Formation of Kaliyar Mekhala Units',
+      subtitle: 'Nurturing 11+ Scenic Hill-Parishes',
+      desc: 'As parishes clustered for stronger regional impact, the picturesque hills of Kaliyar organized their regional "Mekhala" (Zone) under the Diocese of Kothamangalam. This block spearheaded mass youth conventions, writing leagues, catechism aids, and competitive mission retreats.',
+      icon: <BookOpen className="w-5 h-5 text-sky-600" />,
+      tag: 'Mekhala Legacy',
+      bgGradient: 'from-sky-50/50 via-white to-white border-sky-200/65'
+    },
+    {
+      year: '2026',
+      title: 'Launch of the Modern Digital Portal',
+      subtitle: 'A Heritage Stepping Into the Future',
+      desc: 'Embracing the digital frontier, CML Kaliyar Mekhala launched this centralized interactive portal. This initiative streamlines communication across all units, logs regional circulars, showcases arts highlights, and keeps the next generation of digital-age apostles connected in faith.',
+      icon: <History className="w-5 h-5 text-indigo-600" />,
+      tag: 'Digital Frontier',
+      bgGradient: 'from-indigo-50/50 via-white to-white border-indigo-200/65'
+    }
+  ];
+
+  const founders = [
+    {
+      name: 'Fr. Joseph Maliparambil',
+      role: 'The Spiritual Architect (Co-Founder)',
+      malTitle: 'ഫാ. ജോസഫ് മാലിപ്പറമ്പിൽ',
+      bio: 'A visionary priest whose burning love for world evangelization catalyzed the movement. He authored the first constitution, modeling it after Saint Thérèse\'s Carmelite spiritual ideals of the "Little Way," guiding souls toward prayer and simple sacrificial collections.',
+      initial: 'JM',
+      accentColor: 'rose',
+      img: founderPriestImg
+    },
+    {
+      name: 'Mr. P.C. Abraham Kunjettan',
+      role: 'The Lay Pioneer (Co-Founder)',
+      malTitle: 'പി. സി. എബ്രഹാം (കുഞ്ഞേട്ടൻ)',
+      bio: 'Fondly addressed as "CML Kunjettan", he was a selfless lay leader who traveled tirelessly across villages to set up parish units. His magnetic charm on children and youth established CML as Asia\'s single largest children\'s movement of the 20th century.',
+      initial: 'KA',
+      accentColor: 'amber',
+      img: founderLaymanImg
+    }
+  ];
+
+  return (
+    <div className="w-full bg-[#fcf9f6] relative py-12 px-4 sm:px-6 md:px-8 overflow-hidden">
+      {/* Premium Warm Sacred Ambient Glows & Patterns */}
+      <div className="absolute top-0 left-12 w-[650px] h-[650px] bg-radial from-rose-100/60 via-rose-550/10 to-transparent pointer-events-none z-0"></div>
+      <div className="absolute top-1/3 right-0 w-[550px] h-[550px] bg-radial from-amber-100/40 via-amber-50/5 to-transparent pointer-events-none z-0"></div>
+      <div className="absolute bottom-12 left-1/4 w-[600px] h-[600px] bg-radial from-rose-100/30 via-transparent to-transparent pointer-events-none z-0"></div>
+      
+      {/* Structural crosshairs alignment background lines */}
+      <div className="absolute inset-0 pointer-events-none opacity-[0.035] select-none z-0" style={{ backgroundImage: 'radial-gradient(#9f1239 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
+
+      <div className="max-w-6xl mx-auto flex flex-col gap-16 text-left relative z-10">
+        
+        {/* Editorial Title & Header Block */}
+        <div className="flex flex-col gap-5 border-b border-rose-100 pb-10 relative">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white border border-rose-100 text-[#be123c] text-[10px] font-black tracking-widest uppercase rounded-full self-start shadow-3xs animate-fade-in select-none">
+            <span className="flex h-1.5 w-1.5 relative shrink-0">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-rose-600"></span>
+            </span>
+            Discover Our Sacred Roots
+          </div>
+          
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+            <div className="flex flex-col gap-3">
+              <h2 className="font-serif font-black text-3.5xl sm:text-5xl text-slate-900 tracking-tight leading-none">
+                Our Glorious Legacy <span className="text-[#be123c] block mt-1 text-2xl sm:text-3.5xl font-sans lg:inline lg:ml-4 lg:text-3xl">ചരിത്ര വഴികളിലൂടെ...</span>
+              </h2>
+              <p className="text-slate-600 text-sm sm:text-[15px] leading-relaxed max-w-2xl font-medium mt-1">
+                Tracing the miraculous growth of Cherupushpa Mission League from a humble room in Bharananganam in 1947 to a vibrant spiritual army of young apostles across the parishes of Kaliyar Mekhala.
+              </p>
+            </div>
+            
+            {/* Minimalist Est Badge */}
+            <div className="shrink-0 px-5 py-4 bg-white rounded-2xl border border-rose-150 shadow-3xs flex flex-col items-center justify-center text-center self-start lg:self-auto min-w-[110px]">
+              <span className="text-3xl font-serif font-black text-[#be123c] leading-none">1947</span>
+              <span className="text-[9px] font-mono font-black tracking-widest text-[#be123c]/60 uppercase mt-1">ESTABLISHED</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Narrative & Patroness Spotlight */}
+        <div className="bg-white rounded-[32px] border border-rose-100 p-6 sm:p-10 flex flex-col md:flex-row gap-8 sm:gap-10 items-center shadow-xs group relative overflow-hidden">
+          <div className="absolute right-0 top-0 w-44 h-44 bg-rose-500/5 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute left-0 bottom-0 w-32 h-32 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
+          
+          {/* Curved gold frame matching home view */}
+          <div className="w-32 h-[164px] rounded-t-full rounded-b-[24px] overflow-hidden shrink-0 border-[4px] border-amber-500/90 shadow-xl relative group-hover:scale-105 transition-transform duration-500 p-1 bg-white">
+            <div className="w-full h-full rounded-t-full rounded-b-[18px] overflow-hidden bg-rose-950">
+              <img
+                src={thereseImg}
+                alt="Saint Thérèse of Lisieux"
+                className="w-full h-full object-cover object-top hover:scale-115 transition-transform duration-750"
+                referrerPolicy="no-referrer"
+              />
+            </div>
+            {/* Rose overlay badge */}
+            <div className="absolute bottom-2 right-2 bg-gradient-to-br from-amber-500 to-amber-600 text-white p-1 rounded-lg shadow-md border border-white">
+              <span className="text-xs">🌹</span>
+            </div>
+          </div>
+          
+          <div className="flex flex-col gap-3.5 text-left flex-1 relative z-10">
+            <div className="inline-flex py-1 px-3 bg-rose-50 border border-rose-100 rounded-full text-[9px] text-[#be123c] font-black tracking-widest font-mono uppercase self-start">
+              Saint of the Little Way
+            </div>
+            <h4 className="font-serif font-black text-xl sm:text-2xl text-slate-950 leading-tight">
+              Our Patroness: Saint Thérèse of Lisieux (Cherupushpam)
+            </h4>
+            <p className="text-sm text-slate-700 leading-relaxed font-semibold">
+              Though she lived her entire short life inside an enclosed Carmelite convent in Lisieux, France, Pope Pius XI declared her the <strong className="text-rose-900">Co-Patroness of World Missions</strong> side-by-side with St. Francis Xavier. Her spiritual framework, the <strong className="text-amber-800">"Little Way" (ചെറിയ വഴി)</strong>, teaches that we do not need to perform monumental feats; executing ordinary, daily tasks with extraordinary devotion and love is the most potent missionary engine.
+            </p>
+            <div className="flex flex-wrap items-center gap-3 mt-1">
+              <span className="text-xs font-bold italic text-rose-800 bg-rose-50/70 border border-rose-100 px-4 py-1.5 rounded-full shadow-3xs">
+                "My vocation is Love!" — Saint Thérèse
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Co-Founders Block */}
+        <div className="flex flex-col gap-8">
+          <div className="border-b border-rose-100 pb-4">
+            <span className="text-[10px] font-mono font-black text-[#be123c] uppercase tracking-widest block mb-1.5">THE VISIONARY LEADERSHIP</span>
+            <h3 className="font-serif font-black text-2xl sm:text-3.5xl text-slate-900 tracking-tight leading-none">
+              Founding Pillars • സ്ഥാപക നേതാക്കൾ
+            </h3>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {founders.map((founder, index) => (
+              <div 
+                key={index} 
+                className="bg-white rounded-[32px] border border-slate-200/60 p-6 sm:p-8 hover:border-amber-400 hover:shadow-lg transition-all duration-300 flex flex-col sm:flex-row gap-6 group relative overflow-hidden text-left"
+              >
+                {/* Holder Archival Portrait Photo */}
+                <div className="w-24 h-[120px] sm:w-[100px] sm:h-[135px] rounded-t-full rounded-b-[18px] overflow-hidden shrink-0 border-[3.5px] border-amber-500/85 shadow-md group-hover:scale-105 transition-all duration-300 relative self-start mx-auto sm:mx-0 p-1 bg-white">
+                  <div className="w-full h-full rounded-t-full rounded-b-[14px] overflow-hidden bg-slate-100 flex items-center justify-center text-slate-400">
+                    <UserCheck className="w-10 h-10" />
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 to-transparent rounded-t-full rounded-b-[14px]" />
+                </div>
+
+                <div className="flex flex-col gap-3 text-center sm:text-left flex-1 relative z-10">
+                  <div className="flex flex-col">
+                    <span className="text-[9px] font-mono font-black text-[#be123c] uppercase tracking-wider block mb-0.5">
+                      {founder.role}
+                    </span>
+                    <h4 className="font-serif font-black text-lg text-slate-950 leading-tight">
+                      {founder.name}
+                    </h4>
+                    <span className="text-slate-500 font-extrabold text-xs mt-1 bg-slate-50 border border-slate-100 px-2.5 py-0.5 rounded-md self-center sm:self-start">
+                      {founder.malTitle}
+                    </span>
+                  </div>
+                  <p className="text-slate-700 text-xs sm:text-[13px] leading-relaxed font-semibold">
+                    {founder.bio}
+                  </p>
+                </div>
+
+                {/* Right side decorative quote sign */}
+                <span className="absolute right-4 bottom-1 text-7xl font-serif text-slate-100/50 pointer-events-none select-none group-hover:text-amber-100/60 transition-colors duration-300">”</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* CML Historic Treasures Showcase Spotlight */}
+        <div className="bg-white rounded-[32px] border border-rose-100 p-6 sm:p-10 flex flex-col md:flex-row gap-8 sm:gap-10 items-center shadow-xs relative overflow-hidden group">
+          <div className="absolute left-0 bottom-0 w-44 h-44 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
+          
+          <div className="w-full md:w-[32%] aspect-[1.12/1] rounded-2xl overflow-hidden border border-amber-300 shadow-md group-hover:rotate-1 hover:scale-[1.02] transition-all duration-350 shrink-0 relative bg-slate-100 p-1.5">
+            <img
+              src={missionBoxImg}
+              alt="CML Missionary Box"
+              className="w-full h-full object-cover rounded-xl"
+              referrerPolicy="no-referrer"
+            />
+          </div>
+          <div className="flex flex-col gap-4 text-left flex-1 relative z-10">
+            <div className="inline-flex py-1 px-3 bg-amber-50 border border-amber-200 text-amber-800 rounded-full text-[9px] font-mono font-black tracking-widest uppercase self-start">
+              ICONS OF FAITH • മിഷണറി പെട്ടി
+            </div>
+            <h4 className="font-serif font-black text-xl sm:text-2xl text-slate-900 leading-tight">
+              The Sacred Legacy of "Mission Boxes"
+            </h4>
+            <p className="text-slate-700 text-sm leading-relaxed font-semibold">
+              At the very inception of CML, the creators devised a simple yet profound pedagogical tool: the <strong className="text-amber-900">CML Mission Box (മിഷണറി പെട്ടി)</strong>. Handed down to young children in every parish unit, these boxes became active conduits of spiritual sharing. Instead of just saving surplus pocket money, kids were encouraged to offer simple daily acts of sacrifice—saving a coin by choosing to walk, skipping a treat, or dedicating prayers—and drop them with love.
+            </p>
+            <p className="text-slate-600 text-xs sm:text-sm italic font-bold border-l-4 border-[#be123c] pl-4 py-1">
+              These simple sacrifices collected from small village boxes across the diocese accumulated over decades to finance priests, build chapels in distant mission areas, and fuel countless global missionary achievements.
+            </p>
+          </div>
+        </div>
+
+        {/* Timeline Section */}
+        <div className="flex flex-col gap-8">
+          <div className="border-b border-rose-100 pb-4">
+            <span className="text-[10px] font-mono font-black text-rose-700 uppercase tracking-widest block mb-1.5">HISTORIC TIMELINE</span>
+            <h3 className="font-serif font-black text-2xl sm:text-3.5xl text-slate-900 tracking-tight leading-none">
+              The Journey Across Decades (1947 - 2026)
+            </h3>
+          </div>
+
+          <div className="relative border-l-2 border-amber-300 pl-4 sm:pl-10 ml-3 sm:ml-8 py-3 flex flex-col gap-12">
+            {milestones.map((mil, idx) => (
+              <div key={idx} className="relative text-left group">
+                
+                {/* Bullet node on timeline */}
+                <div className="absolute -left-[23px] sm:-left-[49px] top-1.5 w-[14px] h-[14px] sm:w-[18px] sm:h-[18px] rounded-full border-4 border-white bg-amber-500 shadow-md group-hover:bg-rose-700 group-hover:scale-115 transition-all duration-300 z-10" />
+
+                {/* Floating year box */}
+                <div className="inline-flex py-1 px-4 bg-slate-900 text-white text-xs font-black font-mono tracking-widest uppercase rounded-full shadow-sm select-none">
+                  {mil.year}
+                </div>
+
+                {/* Main Content card */}
+                <div className="mt-3 bg-white hover:border-amber-400 rounded-3xl border border-rose-100 p-6 sm:p-8 hover:shadow-md transition-all duration-300 group-hover:-translate-y-1 relative shadow-3xs overflow-hidden">
+                  <div className="absolute right-0 top-0 w-24 h-24 bg-gradient-to-bl from-rose-500/5 to-transparent pointer-events-none rounded-tr-3xl" />
+                  
+                  {/* Category Pill */}
+                  <span className="absolute top-4 right-4 text-[9px] font-black font-mono text-rose-750 bg-rose-50/60 px-2 py-0.5 rounded uppercase tracking-wider border border-rose-100/50">
+                    {mil.tag}
+                  </span>
+
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="p-2 bg-rose-50 border border-rose-100 rounded-xl shadow-3xs shrink-0 text-rose-700">
+                      {mil.icon}
+                    </div>
+                    <div className="flex flex-col leading-tight">
+                      <h4 className="font-serif font-black text-base sm:text-lg text-slate-950">
+                        {mil.title}
+                      </h4>
+                      <span className="text-slate-500 text-xs font-bold mt-1">
+                        {mil.subtitle}
+                      </span>
+                    </div>
+                  </div>
+
+                  <p className="text-slate-700 text-xs sm:text-sm leading-relaxed font-semibold">
+                    {mil.desc}
+                  </p>
+                </div>
+
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Redesigned 4 Pillars Section for History View in Dark Mode */}
+        <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 rounded-[40px] p-8 sm:p-12 border-2 border-slate-800 text-white mt-4 shadow-2xl relative overflow-hidden group">
+          <div className="absolute top-0 right-0 w-44 h-44 bg-rose-500/5 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-44 h-44 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
+          
+          <div className="flex flex-col gap-2 mb-10 border-b border-slate-800/80 pb-6 max-w-xl text-left">
+            <span className="text-amber-400 font-mono text-[10px] font-black uppercase tracking-widest block bg-amber-500/10 px-2.5 py-1 rounded w-fit border border-amber-500/10">The Core Mandate</span>
+            <h4 className="font-sans font-black text-3xl tracking-tight leading-tight mt-1 text-slate-100">
+              The 4 Pillar Ideals of CML • നാല് മുദ്രാവാക്യങ്ങൾ
+            </h4>
+            <p className="text-xs text-slate-400 font-semibold mt-1 leading-relaxed">
+              These represent the sacred missionary pillars taught to every CML cadet to live a fruitful, apostolic life of grace and divine purpose.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            {/* Pillar 1: Sneham */}
+            <div className="p-7 bg-[#0b101c] rounded-[32px] border border-slate-800 hover:border-rose-500/50 hover:shadow-[0_0_30px_rgba(244,63,94,0.15)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between gap-6 text-left relative overflow-hidden group/item">
+              <div className="absolute top-0 right-0 w-20 h-20 bg-rose-500/5 rounded-bl-[80px] pointer-events-none group-hover/item:scale-110 transition-transform duration-300"></div>
+              <div className="absolute top-4 right-6 font-serif text-5xl font-black text-rose-500/5 group-hover/item:text-rose-500/15 transition-colors select-none">01</div>
+              <div className="flex flex-col gap-4">
+                <div className="w-11 h-11 rounded-xl bg-rose-950/40 border border-rose-800/20 flex items-center justify-center text-rose-450 shadow-sm">
+                  <span className="text-xl animate-bounce">❤️</span>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <span className="text-[9px] text-rose-400 font-mono font-black tracking-widest uppercase bg-rose-950/40 border border-rose-900/30 px-2 py-0.5 rounded-md self-start">LOVE (SNEHAM)</span>
+                  <h5 className="text-rose-100 font-sans font-extrabold text-2xl tracking-tight transition-colors group-hover/item:text-rose-400">സ്‌നേഹം</h5>
+                </div>
+                <p className="text-slate-400 text-xs sm:text-[13px] leading-relaxed font-semibold">Loving God above all else with child-like prayers, and offering selfless friendship to every companion without physical or social barriers.</p>
+              </div>
+              <div className="text-[11px] text-rose-300/30 font-mono border-t border-slate-900 pt-3">
+                "സ്നേഹം • Sneham"
+              </div>
+            </div>
+
+            {/* Pillar 2: Thyagam */}
+            <div className="p-7 bg-[#0b101c] rounded-[32px] border border-slate-800 hover:border-amber-500/50 hover:shadow-[0_0_30px_rgba(245,158,11,0.15)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between gap-6 text-left relative overflow-hidden group/item">
+              <div className="absolute top-0 right-0 w-20 h-20 bg-amber-500/5 rounded-bl-[80px] pointer-events-none group-hover/item:scale-110 transition-transform duration-300"></div>
+              <div className="absolute top-4 right-6 font-serif text-5xl font-black text-amber-500/5 group-hover/item:text-amber-500/15 transition-colors select-none">02</div>
+              <div className="flex flex-col gap-4">
+                <div className="w-11 h-11 rounded-xl bg-amber-950/40 border border-amber-800/20 flex items-center justify-center text-amber-450 shadow-sm">
+                  <span className="text-xl animate-pulse">🔥</span>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <span className="text-[9px] text-amber-400 font-mono font-black tracking-widest uppercase bg-amber-950/40 border border-amber-900/30 px-2 py-0.5 rounded-md self-start">SACRIFICE (THYAGAM)</span>
+                  <h5 className="text-amber-100 font-sans font-extrabold text-2xl tracking-tight transition-colors group-hover/item:text-amber-400">ത്യാഗം</h5>
+                </div>
+                <p className="text-slate-400 text-xs sm:text-[13px] leading-relaxed font-semibold">Offering little pocket investments, sweet treats, game schedules, and minor personal conveniences to collect critical aid for remote global missions.</p>
+              </div>
+              <div className="text-[11px] text-amber-300/30 font-mono border-t border-slate-900 pt-3">
+                "ത്യാഗം • Thyagam"
+              </div>
+            </div>
+
+            {/* Pillar 3: Sevanam */}
+            <div className="p-7 bg-[#0b101c] rounded-[32px] border border-slate-800 hover:border-emerald-500/50 hover:shadow-[0_0_30px_rgba(16,185,129,0.15)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between gap-6 text-left relative overflow-hidden group/item">
+              <div className="absolute top-0 right-0 w-20 h-20 bg-emerald-500/5 rounded-bl-[80px] pointer-events-none group-hover/item:scale-110 transition-transform duration-300"></div>
+              <div className="absolute top-4 right-6 font-serif text-5xl font-black text-emerald-500/5 group-hover/item:text-emerald-500/15 transition-colors select-none">03</div>
+              <div className="flex flex-col gap-4">
+                <div className="w-11 h-11 rounded-xl bg-emerald-950/40 border border-emerald-800/20 flex items-center justify-center text-emerald-450 shadow-sm">
+                  <span className="text-xl">🧭</span>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <span className="text-[9px] text-emerald-400 font-mono font-black tracking-widest uppercase bg-emerald-950/40 border border-emerald-900/30 px-2 py-0.5 rounded-md self-start">SERVICE (SEVANAM)</span>
+                  <h5 className="text-emerald-100 font-sans font-extrabold text-2xl tracking-tight transition-colors group-hover/item:text-emerald-400">സേവനം</h5>
+                </div>
+                <p className="text-slate-400 text-xs sm:text-[13px] leading-relaxed font-semibold">Ready, joyful lay assistance rendered in church catechisms, holy altars, parish cleanings, and school study-aid activities with sheer enthusiasm.</p>
+              </div>
+              <div className="text-[11px] text-emerald-300/30 font-mono border-t border-slate-900 pt-3">
+                "സേവനം • Sevanam"
+              </div>
+            </div>
+
+            {/* Pillar 4: Sahanam */}
+            <div className="p-7 bg-[#0b101c] rounded-[32px] border border-slate-800 hover:border-sky-500/50 hover:shadow-[0_0_30px_rgba(14,165,233,0.15)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between gap-6 text-left relative overflow-hidden group/item">
+              <div className="absolute top-0 right-0 w-20 h-20 bg-sky-500/5 rounded-bl-[80px] pointer-events-none group-hover/item:scale-110 transition-transform duration-300"></div>
+              <div className="absolute top-4 right-6 font-serif text-5xl font-black text-sky-500/5 group-hover/item:text-sky-500/15 transition-colors select-none">04</div>
+              <div className="flex flex-col gap-4">
+                <div className="w-11 h-11 rounded-xl bg-sky-950/40 border border-sky-800/20 flex items-center justify-center text-sky-455 shadow-sm">
+                  <span className="text-xl">📖</span>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <span className="text-[9px] text-sky-400 font-mono font-black tracking-widest uppercase bg-sky-950/40 border border-sky-900/30 px-2 py-0.5 rounded-md self-start">SUFFERING (SAHANAM)</span>
+                  <h5 className="text-sky-100 font-sans font-extrabold text-2xl tracking-tight transition-colors group-hover/item:text-sky-400">സഹനം</h5>
+                </div>
+                <p className="text-slate-400 text-xs sm:text-[13px] leading-relaxed font-semibold">Quietly offering up daily academic trials, playground contentions, homework effort, or home cleaning corrections with a genuine alphonsian smile.</p>
+              </div>
+              <div className="text-[11px] text-sky-300/30 font-mono border-t border-slate-900 pt-3">
+                "സഹനം • Sahanam"
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+}

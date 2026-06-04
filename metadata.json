@@ -1,0 +1,6 @@
+{
+  "name": "CML Kaliyar Mekhala Official Portal",
+  "description": "Official premium web portal for Cherupushpa Mission League (CML) Kaliyar Mekhala. Features announcements, news, unit listings, office bearers, events, historical timeline, document downloads, and a dynamic role-based admin panel.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
