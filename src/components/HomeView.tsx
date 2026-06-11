@@ -25,7 +25,8 @@ import {
   MapPin,
   Bell,
   Download,
-  Info
+  Info,
+  UserCheck
 } from 'lucide-react';
 import {
   OfficeBearer,
@@ -38,12 +39,16 @@ import {
   PortalSettings
 } from '../types';
 
-import thereseImg from '../assets/images/st_therese_of_lisieux_1780072293326.png';
-import groupPhotoImg from '../assets/images/regenerated_image_1780418817430.webp';
-import cmlLogoImg from '../assets/images/regenerated_image_1780235265355.jpg';
-import founderPriestImg from '../assets/images/founder_priest_1780076622051.png';
-import founderLaymanImg from '../assets/images/founder_layman_1780076640521.png';
-import saintLittleFlowerImg from '../assets/images/saint_little_flower_1780503586974.png';
+import flagImg from '../assets/images/flag.jpg';
+import logoImg from '../assets/images/logo.jpg';
+import chosenImg from '../assets/images/chosen_leaders.webp';
+
+import thereseImg from '../assets/images/st_therese.png';
+const groupPhotoImg = chosenImg;
+const cmlLogoImg = logoImg;
+import founderPriestImg from '../assets/images/director.png';
+import founderLaymanImg from '../assets/images/founder.png';
+const saintLittleFlowerImg = thereseImg;
 
 interface HomeViewProps {
   settings: PortalSettings;
@@ -381,7 +386,6 @@ export default function HomeView({
                   src={groupPhotoImg}
                   alt="CML Kaliyar Mekhala Community Group at Jai Rani"
                   className="w-full h-full object-cover object-center relative z-0 transform group-hover/hero-frame:scale-[1.03] transition duration-1000 ease-out"
-                  referrerPolicy="no-referrer"
                 />
 
                 {/* Floating landmark information card in bottom left overlay */}
@@ -397,21 +401,7 @@ export default function HomeView({
                   </span>
                 </div>
 
-                {/* Parish statistics badge overlaid inside the image card */}
-                <div className="absolute top-4 right-4 z-20 bg-stone-950/90 backdrop-blur-md border border-amber-400/40 px-3.5 py-1.5 rounded-xl shadow-lg flex items-center gap-2 text-left">
-                  <div className="w-7 h-7 rounded-full overflow-hidden border border-amber-400/50 bg-white p-0.5 flex items-center justify-center select-none">
-                    <img
-                      src={cmlLogoImg}
-                      alt="CML Logo"
-                      className="w-full h-full object-contain rounded-full"
-                      referrerPolicy="no-referrer"
-                    />
-                  </div>
-                  <div className="flex flex-col leading-none select-none">
-                    <span className="text-[11px] font-sans font-extrabold text-stone-200 tracking-wide">shakha</span>
-                    <span className="text-[13px] font-sans font-black text-amber-400 mt-0.5 tracking-tight">13 active</span>
-                  </div>
-                </div>
+
 
               </div>
             </div>
@@ -611,9 +601,11 @@ export default function HomeView({
                         
                         <div className="space-y-4 text-stone-200">
                           <div className="flex items-center gap-3.5 p-3 rounded-xl bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 transition-colors duration-300">
-                            <div className="w-12 h-12 rounded-full border-2 border-rose-400/50 shadow-inner shrink-0 bg-stone-100 flex items-center justify-center text-stone-400">
-                              <UserCheck className="w-6 h-6" />
-                            </div>
+                            <img 
+                              src={founderPriestImg} 
+                              alt="Fr. Joseph Maliparambil" 
+                              className="w-12 h-12 rounded-full object-cover object-top border-2 border-rose-400/50 shadow-inner shrink-0 bg-white"
+                            />
                             <div className="flex flex-col">
                               <p className="font-black text-sm text-white leading-tight">Fr. Joseph Maliparambil</p>
                               <p className="text-[11px] text-rose-200 font-semibold mt-0.5 tracking-wide">Founding Spiritual Director</p>
@@ -621,20 +613,14 @@ export default function HomeView({
                           </div>
                           
                           <div className="flex items-center gap-3.5 p-3 rounded-xl bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 transition-colors duration-300">
-                            <div className="w-12 h-12 rounded-full border-2 border-amber-400/50 shadow-inner shrink-0 bg-stone-100 flex items-center justify-center text-stone-400">
-                              <UserCheck className="w-6 h-6" />
-                            </div>
+                            <img 
+                              src={founderLaymanImg} 
+                              alt="Mr. P.C. Abraham (Kunjettan)" 
+                              className="w-12 h-12 rounded-full object-cover object-top border-2 border-amber-400/50 shadow-inner shrink-0 bg-white"
+                            />
                             <div className="flex flex-col">
                               <p className="font-black text-sm text-white leading-tight">Mr. P.C. Abraham (Kunjettan)</p>
                               <p className="text-[11px] text-amber-200 font-semibold mt-0.5 tracking-wide">Pioneering Lay Apostle</p>
-                            </div>
-                          </div>
-                          
-                          <div className="flex items-center gap-3.5 p-3 rounded-xl bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 transition-colors duration-300">
-                            <img src={saintLittleFlowerImg} alt="Saint Alphonsa" className="w-12 h-12 rounded-full object-cover object-top border-2 border-sky-400/50 shadow-inner shrink-0 bg-white" />
-                            <div className="flex flex-col">
-                              <p className="font-black text-sm text-white leading-tight">Saint Alphonsa</p>
-                              <p className="text-[11px] text-sky-200 font-semibold mt-0.5 tracking-wide">Spiritual Mother</p>
                             </div>
                           </div>
                         </div>
@@ -648,11 +634,10 @@ export default function HomeView({
                   <div className="grid grid-cols-1 md:grid-cols-12 gap-6 w-full items-center">
                     <div className="md:col-span-4 flex items-center justify-center">
                       <div className="relative p-1.5 bg-white border border-stone-200 shadow-xs rounded-2xl flex items-center justify-center shrink-0 w-60 h-60 transform -rotate-1 hover:rotate-0 transition-transform duration-300 overflow-hidden">
-                        <img
-                          src="/src/assets/images/saint_little_flower_1780503586974.png"
-                          alt="Saint Thérèse of Lisieux"
-                          className="w-full h-full object-cover rounded-xl"
-                          referrerPolicy="no-referrer"
+                        <img 
+                          src={saintLittleFlowerImg} 
+                          alt="St. Therese of Lisieux" 
+                          className="w-full h-full object-cover object-[center_20%] opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-out"
                         />
                         <div className="absolute inset-1.5 rounded-xl border border-dashed border-rose-200/40 pointer-events-none" />
                         <span className="absolute bottom-1.5 font-mono text-[8px] font-black uppercase text-rose-800 tracking-widest bg-white/95 backdrop-blur-xs px-1.5 py-0.5 rounded-md border border-stone-250 shadow-3xs">

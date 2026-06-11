@@ -4,6 +4,7 @@
  */
 
 import React, { useState } from 'react';
+import MarksGradeManager from './MarksGradeManager';
 import {
   ShieldAlert,
   Settings,
@@ -21,7 +22,8 @@ import {
   CheckCircle,
   Database,
   Lock,
-  Sparkles
+  Sparkles,
+  Award
 } from 'lucide-react';
 import {
   OfficeBearer,
@@ -34,7 +36,8 @@ import {
   DownloadItem,
   PortalSettings,
   ActivityLog,
-  UserRole
+  UserRole,
+  ParticipantResult
 } from '../types';
 
 interface AdminDashboardProps {
@@ -49,14 +52,15 @@ interface AdminDashboardProps {
     galleryImages: GalleryImage[];
     downloads: DownloadItem[];
     logs: ActivityLog[];
+    results: ParticipantResult[];
     chosenRegistrations?: any[];
   };
-  currentUser: { email: string; name: string; role: 'Super Admin' | 'Admin' | 'Editor' };
+  currentUser: { email: string; name: string; role: 'Super Admin' | 'Admin' | 'Editor' | 'Kalolsavam Editor' };
   onSaveDatabase: (updatedData: any, action: string, target: string) => Promise<boolean>;
 }
 
 export default function AdminDashboard({ dbData, currentUser, onSaveDatabase }: AdminDashboardProps) {
-  const [activeTab, setActiveTab] = useState<'overview' | 'settings' | 'bearers' | 'units' | 'events' | 'news' | 'announcements' | 'gallery' | 'downloads' | 'logs' | 'chosen'>('overview');
+  const [activeTab, setActiveTab] = useState<string>(currentUser.role === 'Kalolsavam Editor' ? 'kalolsavam-marks' : 'overview');
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
 
   // States for CRUD / Form templates
@@ -109,6 +113,12 @@ export default function AdminDashboard({ dbData, currentUser, onSaveDatabase }: 
     title: '', category: 'circular', fileSize: '1.2 MB', downloadUrl: '#', uploadDate: '2026-05-29', description: ''
   });
 
+  // Results crud
+  const [editingResultId, setEditingResultId] = useState<string | null>(null);
+  const [resultForm, setResultForm] = useState<Partial<ParticipantResult>>({
+    competitorName: '', unitId: '', unitName: '', competition: 'Kalolsavam', eventName: '', grade: 'None', position: 'None', totalPoints: 0, isPublished: true
+  });
+
   const triggerToast = (msg: string) => {
     setSuccessMsg(msg);
     setTimeout(() => setSuccessMsg(null), 3000);
@@ -117,6 +127,10 @@ export default function AdminDashboard({ dbData, currentUser, onSaveDatabase }: 
   const isEditorOnly = currentUser.role === 'Editor';
 
   const verifyPermission = () => {
+    if (currentUser.role === 'Kalolsavam Editor' && activeTab !== 'kalolsavam-marks') {
+      triggerToast('Permission Denied: Kalolsavam Editor can only modify Kalolsavam marks!');
+      return false;
+    }
     if (isEditorOnly && activeTab === 'settings') {
       triggerToast('Permission Denied: Editors cannot modify master portal settings!');
       return false;
@@ -466,6 +480,57 @@ export default function AdminDashboard({ dbData, currentUser, onSaveDatabase }: 
     saveState(updated, 'DELETE_DOWNLOAD_RESOURCE', name);
   };
 
+  // 9. Results CRUD
+  const handleSaveResult = () => {
+    if (!resultForm.competitorName || !resultForm.eventName || !resultForm.unitId) {
+      triggerToast('Please complete competitor name, event and unit!');
+      return;
+    }
+
+    let updatedResults = [...dbData.results];
+    let action = '';
+    let target = '';
+
+    const selectedUnit = dbData.units.find(u => u.id === resultForm.unitId);
+    const unitName = selectedUnit ? selectedUnit.name : '';
+
+    if (editingResultId) {
+      updatedResults = updatedResults.map(r => r.id === editingResultId ? { ...r, ...resultForm, unitName } as ParticipantResult : r);
+      action = 'EDIT_RESULT';
+      target = resultForm.competitorName!;
+    } else {
+      const newRes: ParticipantResult = {
+        id: `res-${Date.now()}`,
+        competitorName: resultForm.competitorName!,
+        unitId: resultForm.unitId!,
+        unitName: unitName,
+        competition: resultForm.competition as any || 'Kalolsavam',
+        eventName: resultForm.eventName!,
+        grade: resultForm.grade as any || 'None',
+        position: resultForm.position as any || 'None',
+        totalPoints: resultForm.totalPoints || 0,
+        isPublished: resultForm.isPublished ?? true,
+        createdAt: new Date().toISOString()
+      };
+      updatedResults.push(newRes);
+      action = 'ADD_RESULT';
+      target = newRes.competitorName;
+    }
+
+    const updated = { ...dbData, results: updatedResults };
+    saveState(updated, action, target);
+    setEditingResultId(null);
+    setResultForm({ competitorName: '', unitId: '', unitName: '', competition: 'Kalolsavam', eventName: '', grade: 'None', position: 'None', totalPoints: 0, isPublished: true });
+  };
+
+  const handleDeleteResult = (id: string, name: string) => {
+    const updated = {
+      ...dbData,
+      results: dbData.results.filter(r => r.id !== id)
+    };
+    saveState(updated, 'DELETE_RESULT', name);
+  };
+
   const navItems = [
     { id: 'overview', label: 'Overview', icon: <Database className="w-4 h-4" /> },
     { id: 'settings', label: 'Master Settings', icon: <Settings className="w-4 h-4" /> },
@@ -476,11 +541,123 @@ export default function AdminDashboard({ dbData, currentUser, onSaveDatabase }: 
     { id: 'announcements', label: 'Announcements', icon: <ShieldAlert className="w-4 h-4" /> },
     { id: 'gallery', label: 'Gallery Media', icon: <Image className="w-4 h-4" /> },
     { id: 'downloads', label: 'Downloads', icon: <FileText className="w-4 h-4" /> },
+    { id: 'kalolsavam-marks', label: 'Kalolsavam Marks', icon: <Award className="w-4 h-4" /> },
+    { id: 'sahithyamalsaram-marks', label: 'Sahithyamalsaram Marks', icon: <Award className="w-4 h-4" /> },
     { id: 'chosen', label: 'Chosen Delegates', icon: <Sparkles className="w-4 h-4" /> },
     { id: 'logs', label: 'Activity Logs', icon: <Activity className="w-4 h-4" /> }
-  ];
+  ].filter(item => {
+    if (currentUser.role === 'Kalolsavam Editor') {
+      return item.id === 'kalolsavam-marks' || item.id === 'sahithyamalsaram-marks';
+    }
+    return true;
+  });
+
+
+  // PDF Upload & Bulk Editing State
+  const [pdfFile, setPdfFile] = useState<File | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [bulkEntries, setBulkEntries] = useState<ParticipantResult[]>([]);
+
+  const handleFileUpload = async (e: any) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setPdfFile(file);
+    setIsUploading(true);
+    triggerToast('Analyzing PDF layout...');
+    
+    const formData = new FormData();
+    formData.append('file', file);
+    try {
+      const res = await fetch('/api/parse-pdf', {
+        method: 'POST',
+        body: formData
+      });
+      const data = await res.json();
+      if (data.success && data.participants) {
+        // Pre-fill existing entries if they match, else new
+        const competitionType = activeTab === 'kalolsavam-marks' ? 'Kalolsavam' : 'Sahithyamalsaram';
+        const newEntries = data.participants.map((p: any) => ({
+          id: p.id,
+          competitorName: p.competitorName,
+          unitId: '', // Requires manual mapping or matching
+          unitName: 'Unknown Unit', // Will be updated if user selects unit manually
+          competition: competitionType,
+          eventName: p.eventName + ' ' + p.section,
+          grade: 'None',
+          position: 'None',
+          totalPoints: 0,
+          isPublished: true
+        }));
+        setBulkEntries(newEntries);
+        triggerToast(`Extracted ${newEntries.length} participants from PDF!`);
+      } else {
+        triggerToast('Failed to parse PDF: ' + (data.error || 'Unknown error'));
+      }
+    } catch (err: any) {
+      triggerToast('Network error during PDF parse: ' + err.message);
+    }
+    setIsUploading(false);
+  };
+
+  const addManualEntry = () => {
+    const competitionType = activeTab === 'kalolsavam-marks' ? 'Kalolsavam' : 'Sahithyamalsaram';
+    setBulkEntries([...bulkEntries, {
+      id: 'manual_' + Date.now(),
+      competitorName: '',
+      unitId: '',
+      unitName: '',
+      competition: competitionType,
+      eventName: '',
+      grade: 'None',
+      position: 'None',
+      totalPoints: 0,
+      isPublished: true
+    }]);
+  };
+
+  const removeBulkEntry = (id: string) => {
+    setBulkEntries(bulkEntries.filter(b => b.id !== id));
+  };
+
+  const updateBulkEntry = (id: string, field: string, value: any) => {
+    setBulkEntries(bulkEntries.map(b => {
+      if (b.id !== id) return b;
+      const updated = { ...b, [field]: value };
+      
+      // Auto-assign unit name if unitId changes
+      if (field === 'unitId') {
+        const u = dbData.units.find(unit => unit.id === value);
+        if (u) updated.unitName = u.name;
+      }
+      return updated as ParticipantResult;
+    }));
+  };
+
+  const handleSaveBulkMarks = () => {
+    if (!verifyPermission()) return;
+    const competitionType = activeTab === 'kalolsavam-marks' ? 'Kalolsavam' : 'Sahithyamalsaram';
+    
+    // Remove all existing records for this competition type IF the user wants, or we just append/overwrite
+    // Let's just append or update existing
+    let updatedResults = [...(dbData.results || [])];
+    
+    bulkEntries.forEach(entry => {
+      const existingIdx = updatedResults.findIndex(r => r.id === entry.id || (r.competitorName === entry.competitorName && r.eventName === entry.eventName && r.competition === entry.competition));
+      if (existingIdx >= 0) {
+        updatedResults[existingIdx] = entry;
+      } else {
+        updatedResults.push(entry);
+      }
+    });
+
+    const updated = { ...dbData, results: updatedResults };
+    saveState(updated, 'BULK_UPDATE_MARKS', competitionType);
+    setBulkEntries([]);
+    setPdfFile(null);
+  };
 
   return (
+
     <div className="w-full min-h-screen bg-slate-900 text-slate-100 flex flex-col lg:flex-row shadow-inner">
       
       {/* Toast persistent notification overlay */}
@@ -1811,6 +1988,15 @@ export default function AdminDashboard({ dbData, currentUser, onSaveDatabase }: 
           </div>
         )}
 
+        {(activeTab === 'kalolsavam-marks' || activeTab === 'sahithyamalsaram-marks') && (
+          <MarksGradeManager 
+             dbData={dbData} 
+             competitionType={activeTab === 'kalolsavam-marks' ? 'Kalolsavam' : 'Sahithyamalsaram'} 
+             currentUser={currentUser} 
+             onSaveDatabase={onSaveDatabase} 
+             triggerToast={triggerToast} 
+          />
+        )}
       </div>
     </div>
   );

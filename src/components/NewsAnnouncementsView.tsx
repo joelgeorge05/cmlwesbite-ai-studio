@@ -6,8 +6,7 @@
 import React, { useState } from 'react';
 import { Newspaper, Search, ArrowRight, Compass, Megaphone, Bookmark } from 'lucide-react';
 import { NewsItem, Announcement } from '../types';
-
-import thereseImg from '../assets/images/st_therese_of_lisieux_1780072293326.png';
+import thereseImg from '../assets/images/st_therese.png';
 
 interface NewsAnnouncementsViewProps {
   news: NewsItem[];

@@ -6,6 +6,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { jsPDF } from 'jspdf';
+import logoImg from '../assets/images/logo.jpg';
 import { 
   Trophy, 
   Users, 
@@ -42,64 +43,47 @@ interface KalolsavamViewProps {
 }
 
 export default function KalolsavamView({ dbData, isAdminLoggedIn, onSaveDatabase, currentUser }: KalolsavamViewProps) {
-  // Navigation categories representing the age groups
-  const ageCategories = ["Sub Junior", "Junior", "Senior", "Super Senior", "Group"];
+  // Compute categories and items dynamically from registrations
+  const itemsMap: Record<string, Array<{ id: string; name: string; eventName: string; status: string }>> = {};
+  
+  (dbData.registrations || []).forEach((reg: any) => {
+    if (!itemsMap[reg.section]) {
+      itemsMap[reg.section] = [];
+    }
+    const existing = itemsMap[reg.section].find(i => i.eventName === reg.eventName);
+    if (!existing) {
+      const statusKey = `Kalolsavam_${reg.section}_${reg.eventName}`;
+      const status = (dbData.competitionStatuses && dbData.competitionStatuses[statusKey]) || 'Not Started';
+      itemsMap[reg.section].push({
+        id: `event_${reg.section}_${reg.eventName}`.replace(/\s+/g, ''),
+        name: reg.eventName.toUpperCase(),
+        eventName: reg.eventName,
+        status: status
+      });
+    }
+  });
 
-  // Competition events mapped to their respective age categories with unique IDs
-  const itemsMap: Record<string, Array<{ id: string; name: string; eventName: string; status: 'Not Started' | 'Ongoing' | 'Completed' }>> = {
-    "Sub Junior": [
-      { id: "sj-1", name: "BIBLE READING SUB JUNIOR BOYS", eventName: "Bible Reading Sub Junior Boys", status: "Not Started" },
-      { id: "sj-2", name: "BIBLE READING SUB JUNIOR GIRLS", eventName: "Bible Reading Sub Junior Girls", status: "Not Started" },
-      { id: "sj-3", name: "SOLO SUB JUNIOR BOYS", eventName: "Solo Sub Junior Boys", status: "Not Started" },
-      { id: "sj-4", name: "SPEECH SUB JUNIOR GIRLS", eventName: "Speech Sub Junior Girls", status: "Not Started" }
-    ],
-    "Junior": [
-      { id: "jr-1", name: "BIBLE STORY RECITATION JUNIOR BOYS", eventName: "Bible Story Recitation (കഥാപ്രസംഗം)", status: "Completed" },
-      { id: "jr-2", name: "CLAY MODELLING JUNIOR GIRLS", eventName: "Clay Modelling & Sacred Art (മൺപാത്ര നിർമ്മാണം)", status: "Not Started" },
-      { id: "jr-3", name: "SOLO HYMN SINGING JUNIOR", eventName: "Solo Hymn Singing (ഭജനഗാനം)", status: "Not Started" }
-    ],
-    "Senior": [
-      { id: "sr-1", name: "MARGAMKALI SENIORS", eventName: "Margamkali (മാർഗംകളി)", status: "Completed" },
-      { id: "sr-2", name: "ELOCUTION / PUBLIC SPEAKING SENIORS", eventName: "Elocution / Public Speaking (പ്രസംഗം)", status: "Not Started" },
-      { id: "sr-3", name: "GROUP BIBLE DRAMA SENIORS", eventName: "Group Bible Drama (ബൈബിൾ നാടകം)", status: "Completed" }
-    ],
-    "Super Senior": [
-      { id: "ss-1", name: "BIBLE QUIZ SUPER SENIORS", eventName: "Bible Quiz Super Seniors", status: "Not Started" },
-      { id: "ss-2", name: "ANCHOR PRESENTATION SUPER SENIORS", eventName: "Anchor Presentation Super Seniors", status: "Not Started" }
-    ],
-    "Group": [
-      { id: "gp-1", name: "MARGAMKALI GROUP (GENERAL)", eventName: "Margamkali Group (General)", status: "Completed" },
-      { id: "gp-2", name: "GROUP BIBLE DRAMA (GENERAL)", eventName: "Group Bible Drama (General)", status: "Completed" }
-    ]
-  };
+  // Default to these categories if db is empty
+  if (Object.keys(itemsMap).length === 0) {
+    itemsMap["Sub Junior"] = [];
+    itemsMap["Junior"] = [];
+    itemsMap["Senior"] = [];
+    itemsMap["Super Senior"] = [];
+    itemsMap["Group Items"] = [];
+  }
 
-  // Seed participant names and locations based on the screenshot data
-  const seedParticipants = [
-    // Sub Junior - Solo Boys
-    { id: "p-sj3-1", name: "ARDEN EMMANUEL (BESTIN,) (KALLARACKAL)", shakha: "Njarakkad", itemId: "sj-3", categoryName: "SOLO SUB JUNIOR BOYS - KALIYAR REGION" },
-    { id: "p-sj3-2", name: "PAUL SHINOY, (CHERUPARAMBIL)", shakha: "Njarakkad", itemId: "sj-3", categoryName: "SOLO SUB JUNIOR BOYS - KALIYAR REGION" },
-    { id: "p-sj3-3", name: "HANOK ANEESH, (POOTHOTTATHIL)", shakha: "Kodikulam", itemId: "sj-3", categoryName: "SOLO SUB JUNIOR BOYS - KALIYAR REGION" },
-    
-    // Sub Junior - Bible Reading Boys
-    { id: "p-sj1-1", name: "JUSTIN MATHEW (NJARKKEL)", shakha: "Vannappuram", itemId: "sj-1", categoryName: "BIBLE READING SUB JUNIOR BOYS - KALIYAR REGION" },
-    { id: "p-sj1-2", name: "STEVE SAJI (ELANJIKAL)", shakha: "Thommankuthu", itemId: "sj-1", categoryName: "BIBLE READING SUB JUNIOR BOYS - KALIYAR REGION" },
-    
-    // Sub Junior - Bible Reading Girls
-    { id: "p-sj2-1", name: "LIYA BENNY (VALIPLACKAL)", shakha: "Karimannoor", itemId: "sj-2", categoryName: "BIBLE READING SUB JUNIOR GIRLS - KALIYAR REGION" },
-    { id: "p-sj2-2", name: "RHEA VINOD (NEDUMPALLIL)", shakha: "Kaliyar", itemId: "sj-2", categoryName: "BIBLE READING SUB JUNIOR GIRLS - KALIYAR REGION" },
-    
-    // Sub Junior - Speech Girls
-    { id: "p-sj4-1", name: "MERIN ELSA (ALUNKAL)", shakha: "Kodikulam", itemId: "sj-4", categoryName: "SPEECH SUB JUNIOR GIRLS - KALIYAR REGION" },
-    { id: "p-sj4-2", name: "ANGEL SHIBU (PAZHEPARAMBIL)", shakha: "Vannappuram", itemId: "sj-4", categoryName: "SPEECH SUB JUNIOR GIRLS - KALIYAR REGION" },
+  const ageCategories = Object.keys(itemsMap);
 
-    // Junior - Bible Story (Seeded with data matching db.json results for automatic synchronization)
-    { id: "p-jr1-1", name: "Robin Joseph", shakha: "Kaliyar", itemId: "jr-1", categoryName: "BIBLE STORY RECITATION (കഥാപ്രസംഗം) - KALIYAR REGION" },
-    { id: "p-jr1-2", name: "Tessa Saji", shakha: "Kodikulam", itemId: "jr-1", categoryName: "BIBLE STORY RECITATION (കഥാപ്രസംഗം) - KALIYAR REGION" },
-
-    // Senior - Margamkali (Seeded with data matching db.json results for automatic synchronization)
-    { id: "p-sr1-1", name: "Albin Kurian", shakha: "Vannappuram", itemId: "sr-1", categoryName: "MARGAMKALI (മാർഗംകളി) - KALIYAR REGION" },
-    { id: "p-sr1-2", name: "Maria Augustine", shakha: "Karimannoor", itemId: "sr-1", categoryName: "MARGAMKALI (മാർഗംകളി) - KALIYAR REGION" }
-  ];
+  // Build participants dynamically
+  const participantsList = (dbData.registrations || []).map((reg: any) => {
+    return {
+      id: reg.id,
+      name: reg.competitorName,
+      shakha: dbData.units.find((u: any) => u.id === reg.shakhaId)?.name || reg.shakhaId,
+      itemId: `event_${reg.section}_${reg.eventName}`.replace(/\s+/g, ''),
+      categoryName: `${reg.eventName.toUpperCase()} - ${reg.section.toUpperCase()}`
+    };
+  });
 
   // Selected filters states
   const [selectedCategory, setSelectedCategory] = useState<string>("Sub Junior");
@@ -332,11 +316,17 @@ export default function KalolsavamView({ dbData, isAdminLoggedIn, onSaveDatabase
   };
 
   // High-fidelity PDF exporter
-  const exportPDF = (type: 'participant' | 'competition' | 'unit' | 'leaderboard', selectedEntity?: any) => {
+  const exportPDF = async (type: 'participant' | 'competition' | 'unit' | 'leaderboard', selectedEntity?: any) => {
     const doc = new jsPDF();
     
     doc.setFillColor(136, 19, 55); 
     doc.rect(0, 0, 210, 42, 'F');
+    try {
+      const img = new Image();
+      img.src = logoImg;
+      await new Promise((resolve, reject) => { img.onload = resolve; img.onerror = reject; });
+      doc.addImage(img, 'JPEG', 15, 8, 26, 26);
+    } catch(e) { console.warn(e); }
     
     doc.setTextColor(255, 255, 255);
     doc.setFont('helvetica', 'bold');
@@ -344,7 +334,7 @@ export default function KalolsavamView({ dbData, isAdminLoggedIn, onSaveDatabase
     doc.text('CHERUPUSHPA MISSION LEAGUE', 105, 17, { align: 'center' });
     doc.setFontSize(11);
     doc.setFont('helvetica', 'normal');
-    doc.text('KALIYAR MEKHALA CENTRAL COMMITTEE', 105, 25, { align: 'center' });
+    doc.text('KALIYAR MEKHALA', 105, 25, { align: 'center' });
     doc.setFontSize(9);
     doc.setTextColor(244, 63, 94);
     doc.text('AUTOMATED COMPETITION PORTAL SCORING & LEDGER CERTIFICATION', 105, 31, { align: 'center' });
@@ -372,8 +362,8 @@ export default function KalolsavamView({ dbData, isAdminLoggedIn, onSaveDatabase
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(9.5);
       doc.text('Rank', 20, y + 6.5);
-      doc.text('Parish Church Unit', 45, y + 6.5);
-      doc.text('Points', 105, y + 6.5);
+      doc.text('Parish Church Unit', 35, y + 6.5);
+      doc.text('Points', 110, y + 6.5);
       doc.text('Cadets', 125, y + 6.5);
       doc.text('A-Grades', 145, y + 6.5);
       doc.text('1st Pos', 165, y + 6.5);
@@ -397,8 +387,8 @@ export default function KalolsavamView({ dbData, isAdminLoggedIn, onSaveDatabase
         }
         
         doc.text(String(row.rank), 20, y + 5.5);
-        doc.text(row.unitName, 45, y + 5.5);
-        doc.text(String(row.totalPoints), 105, y + 5.5);
+        doc.text(row.unitName, 35, y + 5.5);
+        doc.text(String(row.totalPoints), 110, y + 5.5);
         doc.text(String(row.participantsCount), 125, y + 5.5);
         doc.text(String(row.aGradesCount), 145, y + 5.5);
         doc.text(String(row.firstPositionsCount), 165, y + 5.5);
@@ -420,11 +410,11 @@ export default function KalolsavamView({ dbData, isAdminLoggedIn, onSaveDatabase
       doc.setTextColor(71, 85, 105);
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(9);
-      doc.text('Participant Name', 20, y + 6.5);
-      doc.text('Parish Church Unit', 75, y + 6.5);
-      doc.text('Grade', 125, y + 6.5);
-      doc.text('Position', 145, y + 6.5);
-      doc.text('Points Claimed', 168, y + 6.5);
+      doc.text('Participant Name', 16, y + 6.5);
+      doc.text('Parish Church Unit', 65, y + 6.5);
+      doc.text('Grade', 145, y + 6.5);
+      doc.text('Position', 162, y + 6.5);
+      doc.text('Points Claimed', 180, y + 6.5);
       y += 10;
       
       const list = (dbData?.results || []).filter((r: any) => r.competition === selectedEntity && r.isPublished);
@@ -437,12 +427,12 @@ export default function KalolsavamView({ dbData, isAdminLoggedIn, onSaveDatabase
         doc.setFillColor(idx % 2 === 0 ? 255 : 251, idx % 2 === 0 ? 255 : 251, idx % 2 === 0 ? 255 : 251);
         doc.rect(15, y, 180, 8.5, 'F');
         doc.setTextColor(15, 23, 42);
-        doc.text(row.competitorName, 20, y + 5.5);
-        doc.text(row.unitName, 75, y + 5.5);
-        doc.text(row.grade, 125, y + 5.5);
-        doc.text(row.position, 145, y + 5.5);
+        doc.text(row.competitorName, 16, y + 5.5);
+        doc.text(row.unitName, 65, y + 5.5);
+        doc.text(row.grade, 145, y + 5.5);
+        doc.text(row.position, 162, y + 5.5);
         doc.setFont('helvetica', 'bold');
-        doc.text(`${row.totalPoints} Pts`, 168, y + 5.5);
+        doc.text(`${row.totalPoints} Pts`, 180, y + 5.5);
         y += 8.5;
       });
     } else if (type === 'participant') {
@@ -573,13 +563,13 @@ export default function KalolsavamView({ dbData, isAdminLoggedIn, onSaveDatabase
       if (!itemConfig) return;
 
       // 1. Load active seed rows that belong to this item
-      const itemSeeds = seedParticipants.filter(p => p.itemId === itemId);
+      const itemSeeds = participantsList.filter(p => p.itemId === itemId);
       itemSeeds.forEach(seed => {
         // Scan for matching database override results
         const dbOverride = activeResults.find((r: any) => 
-          r.competition === 'Kalolsavam' && 
+          r.registrationId === seed.id || (r.competition === 'Kalolsavam' && 
           r.eventName.toLowerCase().trim() === itemConfig.eventName.toLowerCase().trim() && 
-          r.competitorName.toLowerCase().trim() === seed.name.toLowerCase().trim()
+          r.competitorName.toLowerCase().trim() === seed.name.toLowerCase().trim())
         );
 
         list.push({
@@ -785,7 +775,7 @@ export default function KalolsavamView({ dbData, isAdminLoggedIn, onSaveDatabase
                       let medalBadge = null;
                       let cardStyle = "bg-white border-slate-200/80 hover:border-slate-350 shadow-2xs hover:shadow-sm";
                       let rankBadgeStyle = "bg-slate-100/70 border border-slate-200 text-slate-600";
-                      let scoreColor = "text-[#f43f5e]";
+                      let scoreColor = "text-[#8b5cf6]";
                       let progressColor = "bg-slate-400";
                       let premiumBadge = null;
                       
@@ -1035,7 +1025,7 @@ export default function KalolsavamView({ dbData, isAdminLoggedIn, onSaveDatabase
                                     </div>
                                   </div>
                                   <div className="flex flex-col items-end shrink-0 text-right">
-                                    <span className="text-[15px] font-mono font-black text-[#f43f5e]">{runRank.totalPoints} PTS</span>
+                                    <span className="text-[15px] font-mono font-black text-[#8b5cf6]">{runRank.totalPoints} PTS</span>
                                     <span className="text-[8px] font-bold text-slate-450 uppercase">{runRank.participantsCount} entries</span>
                                   </div>
                                 </div>
@@ -1100,7 +1090,7 @@ export default function KalolsavamView({ dbData, isAdminLoggedIn, onSaveDatabase
                                 </td>
                                 <td className="py-3.5 px-4 text-right">
                                   <div className="inline-flex items-baseline gap-1 font-mono">
-                                    <span className="text-base font-black text-[#f43f5e]">{unitRank.totalPoints}</span>
+                                    <span className="text-base font-black text-[#8b5cf6]">{unitRank.totalPoints}</span>
                                     <span className="text-[9px] text-slate-405 font-black font-sans uppercase">PTS</span>
                                   </div>
                                 </td>
@@ -1128,21 +1118,30 @@ export default function KalolsavamView({ dbData, isAdminLoggedIn, onSaveDatabase
               </div>
               
               <div className="flex flex-wrap gap-2.5">
-                <button
-                  onClick={() => setSelectedItem('All')}
-                  className={`px-4 py-3 rounded-2xl text-[11px] font-black uppercase tracking-wider transition-all duration-300 border cursor-pointer select-none ${
-                    selectedItem === 'All'
-                      ? 'border-rose-500 text-[#f43f5e] bg-rose-50/40 shadow-xs'
-                      : 'bg-slate-50 text-slate-705 border-slate-150/40 hover:bg-slate-100/80 hover:border-slate-205'
-                  }`}
-                >
-                  All Competitions
-                </button>
-                {activeEventsList.map((item) => {
+                {activeEventsList.length === 0 ? (
+                  <div className="w-full py-8 text-center flex flex-col items-center justify-center gap-2 text-slate-400">
+                    <Activity className="w-8 h-8 text-slate-200 mb-1" />
+                    <span className="font-bold text-sm text-slate-500">No Events Configured Yet</span>
+                    <span className="text-xs">Once you upload the official PDF registry, events will appear here automatically.</span>
+                  </div>
+                ) : (
+                  <>
+                    <button
+                      onClick={() => setSelectedItem('All')}
+                      className={`px-4 py-3 rounded-2xl text-[11px] font-black uppercase tracking-wider transition-all duration-300 border cursor-pointer select-none ${
+                        selectedItem === 'All'
+                          ? 'border-rose-500 text-[#8b5cf6] bg-rose-50/40 shadow-xs'
+                          : 'bg-slate-50 text-slate-705 border-slate-150/40 hover:bg-slate-100/80 hover:border-slate-205'
+                      }`}
+                    >
+                      All Competitions
+                    </button>
+                    {activeEventsList.map((item) => {
                   const isActive = selectedItem === item.id;
                   let statusBadgeColor = "bg-slate-100 text-slate-600 border-slate-200/50";
+                  if (item.status === 'Result Published') statusBadgeColor = "bg-rose-50 text-rose-600 border-rose-100/40 font-black";
                   if (item.status === 'Completed') statusBadgeColor = "bg-emerald-50 text-emerald-600 border-emerald-100/40 font-black";
-                  if (item.status === 'Ongoing') statusBadgeColor = "bg-amber-50 text-amber-700 border-amber-100/40 font-black";
+                  if (item.status === 'Ongoing' || item.status === 'Started') statusBadgeColor = "bg-amber-50 text-amber-700 border-amber-100/40 font-black";
 
                   return (
                     <button
@@ -1150,7 +1149,7 @@ export default function KalolsavamView({ dbData, isAdminLoggedIn, onSaveDatabase
                       onClick={() => setSelectedItem(item.id)}
                       className={`px-4 py-3 rounded-2xl text-[11px] font-black uppercase tracking-wider transition-all duration-300 border flex items-center gap-2.5 cursor-pointer select-none whitespace-nowrap ${
                         isActive
-                          ? 'border-rose-500 text-[#f43f5e] bg-rose-50/40 shadow-xs'
+                          ? 'border-rose-500 text-[#8b5cf6] bg-rose-50/40 shadow-xs'
                           : 'bg-slate-50 text-slate-705 border-slate-150/40 hover:bg-slate-100/80 hover:border-slate-205'
                       }`}
                     >
@@ -1161,46 +1160,11 @@ export default function KalolsavamView({ dbData, isAdminLoggedIn, onSaveDatabase
                     </button>
                   );
                 })}
+                  </>
+                )}
               </div>
 
-              {/* Age Divisions Selector Section moved at the bottom of track performance event list box */}
-              <div className="border-t border-slate-100 pt-5 mt-5">
-                <h5 className="font-display font-black text-[10px] text-slate-400 mb-3.5 tracking-widest uppercase flex items-center gap-2 select-none">
-                  <BookOpen className="w-3.5 h-3.5 text-[#f43f5e]" />
-                  Age Divisions
-                </h5>
-                <div className="flex flex-wrap gap-2.5 relative z-10">
-                  {ageCategories.map((cat, idx) => {
-                    const isActive = selectedCategory === cat;
-                    return (
-                      <button
-                        key={cat}
-                        onClick={() => handleCategorySelect(cat)}
-                        className={`px-4 py-2.5 rounded-2xl text-[11px] font-black tracking-wider uppercase transition-all duration-300 cursor-pointer flex items-center gap-2 select-none relative overflow-hidden ${
-                          isActive 
-                            ? 'bg-gradient-to-r from-rose-600 to-[#f43f5e] text-white shadow-md shadow-rose-555/15 border border-rose-500/20' 
-                            : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-150/40 hover:border-slate-200'
-                        }`}
-                      >
-                        {isActive && (
-                          <div className="absolute left-0 top-0 bottom-0 w-1 bg-amber-400" />
-                        )}
-                        <span className="tracking-tight flex items-center gap-1.5">
-                          <span className={`text-[9px] font-mono leading-none ${isActive ? 'text-amber-300 font-bold' : 'text-slate-450'}`}>0{idx + 1}</span>
-                          {cat}
-                        </span>
-                        <span className={`text-[8px] font-mono font-black tracking-normal px-2 py-0.5 rounded-lg border flex items-center justify-center leading-none ${
-                          isActive 
-                            ? 'bg-white/10 text-white border-white/10' 
-                            : 'bg-slate-200/50 text-slate-500 border-slate-200/30'
-                        }`}>
-                          {(itemsMap[cat] || []).length} items
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
+
             </div>
 
             {/* TABLE AND RESULTS GRID (LEDGER CAPABILITIES) */}

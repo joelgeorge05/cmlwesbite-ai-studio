@@ -4,11 +4,12 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { Phone, Mail, Menu, X, ShieldAlert, Award, BookOpen, Sparkles, PenTool, Star } from 'lucide-react';
+import { Phone, Mail, Menu, X, ShieldAlert, Award, BookOpen, Sparkles, PenTool, Star, Instagram } from 'lucide-react';
 import { motion } from 'motion/react';
 import { Announcement, PortalSettings } from '../types';
 
-import cmlLogoImg from '../assets/images/regenerated_image_1780235265355.jpg';
+import cmlLogoImg from '../assets/images/logo.jpg';
+import thereseImg from '../assets/images/st_therese.png';
 
 interface HeaderProps {
   activeTab: string;
@@ -40,6 +41,8 @@ export default function Header({
   const urgentAnnouncements = announcements.filter(a => a.type === 'urgent');
   const scrollItems = urgentAnnouncements.length > 0 ? urgentAnnouncements : announcements;
 
+  console.log('HEADER DEBUG:', { isAdminLoggedIn, showKalolsavam, showSahithyamalsaram, settings });
+
   useEffect(() => {
     if (scrollItems.length <= 1) return;
     const interval = setInterval(() => {
@@ -65,33 +68,37 @@ export default function Header({
   // CML Crest Logo IMG
   const CMLLogo = () => (
     <div id="header-cml-logo-container" className="relative group shrink-0">
+      <div className="absolute inset-0 bg-amber-500/20 blur-xl rounded-full group-hover:bg-amber-500/40 transition-colors duration-500" />
       <img
         id="header-cml-logo-img"
         src={cmlLogoImg}
         alt="Cherupushpa Mission League Logo"
-        className="w-12 h-12 rounded-full border-2 border-amber-400 bg-white p-0.5 object-cover shadow-lg shadow-amber-500/15 group-hover:scale-105 transition-all duration-300"
+        className="w-16 h-16 md:w-20 md:h-20 rounded-full border-[3px] border-amber-400/90 bg-slate-900 p-0.5 object-cover shadow-[0_0_15px_rgba(251,191,36,0.3)] group-hover:scale-105 group-hover:shadow-[0_0_25px_rgba(251,191,36,0.5)] transition-all duration-300 relative z-10"
         referrerPolicy="no-referrer"
       />
-      <div className="absolute -inset-0.5 rounded-full bg-gradient-to-tr from-amber-500 to-rose-500 opacity-0 group-hover:opacity-30 blur-xs transition-opacity duration-300 -z-10" />
     </div>
   );
 
   return (
-    <header className="w-full flex flex-col bg-slate-900 text-white shadow-xl">
+    <header className="w-full flex flex-col bg-slate-950 text-white shadow-2xl relative overflow-hidden">
+      {/* Subtle Glows */}
+      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-rose-500/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-[120px] pointer-events-none" />
+
       {/* Top Header Bar */}
-      <div className="w-full max-w-7xl mx-auto px-4 md:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-slate-800">
-        <div className="flex items-center gap-3 cursor-pointer" onClick={() => handleLinkClick('home')}>
+      <div className="w-full max-w-7xl mx-auto px-4 md:px-6 py-4 md:py-5 flex flex-col sm:flex-row items-center justify-between gap-6 border-b border-white/5 relative z-10">
+        <div className="flex items-center gap-4 cursor-pointer group" onClick={() => handleLinkClick('home')}>
           <CMLLogo />
           <div className="flex flex-col">
-            <h1 className="font-sans font-bold text-lg md:text-xl lg:text-2xl text-amber-500 tracking-tight leading-tight">
+            <h1 className="font-sans font-bold text-xl md:text-2xl lg:text-[28px] text-amber-500 tracking-tight leading-snug mb-1">
               Cherupushpa Mission League
             </h1>
             <div className="flex items-center gap-2">
-              <span className="text-xs md:text-sm font-semibold text-rose-300 tracking-wider uppercase">
-                kaliyar mekhala
+              <span className="px-2.5 py-0.5 rounded-md bg-rose-500/10 text-rose-300 border border-rose-500/20 text-[10px] md:text-[11px] font-bold tracking-widest uppercase shadow-sm">
+                Kaliyar Mekhala
               </span>
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
-              <span className="text-[10px] md:text-xs text-slate-400 font-mono tracking-widest uppercase">
+              <span className="text-[10px] md:text-[11px] text-slate-400 font-medium tracking-wider uppercase flex items-center gap-1.5">
+                <span className="w-1 h-1 rounded-full bg-slate-600"></span>
                 Official Portal
               </span>
             </div>
@@ -99,67 +106,56 @@ export default function Header({
         </div>
 
         {/* Support desk and Email Contacts */}
-        <div className="hidden lg:flex items-center gap-6">
-          <a href={`tel:${settings.supportDesk}`} className="flex items-center gap-3 group">
-            <div className="p-2 bg-slate-800 rounded-full text-amber-500 group-hover:bg-slate-700 transition">
-              <Phone className="w-4 h-4" />
+        <div className="hidden lg:flex items-center gap-4">
+          <a href="https://instagram.com/cml_kaliyar_mekhala" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 px-4 py-2 rounded-xl bg-slate-900/50 hover:bg-slate-800 border border-white/5 hover:border-pink-500/30 transition-all group backdrop-blur-sm shadow-sm whitespace-nowrap shrink-0">
+            <div className="p-2 bg-pink-500/10 rounded-lg text-pink-400 group-hover:scale-110 group-hover:bg-pink-500/20 transition-all shrink-0">
+              <Instagram className="w-4 h-4" />
             </div>
             <div className="flex flex-col text-left">
-              <span className="text-[10px] uppercase tracking-wider text-slate-400">Support Desk</span>
-              <span className="text-sm font-semibold text-slate-100">{settings.supportDesk}</span>
+              <span className="text-[9px] font-bold uppercase tracking-widest text-slate-500 group-hover:text-pink-400/70 transition-colors">Instagram</span>
+              <span className="text-sm font-bold text-slate-200">cml_kaliyar_mekhala</span>
             </div>
           </a>
 
-          <a href={`mailto:${settings.email}`} className="flex items-center gap-3 group">
-            <div className="p-2 bg-slate-800 rounded-full text-rose-400 group-hover:bg-slate-700 transition">
+          <a href={`mailto:${settings.email}`} className="flex items-center gap-3 px-4 py-2 rounded-xl bg-slate-900/50 hover:bg-slate-800 border border-white/5 hover:border-rose-400/30 transition-all group backdrop-blur-sm shadow-sm whitespace-nowrap shrink-0">
+            <div className="p-2 bg-rose-500/10 rounded-lg text-rose-400 group-hover:scale-110 group-hover:bg-rose-500/20 transition-all shrink-0">
               <Mail className="w-4 h-4" />
             </div>
             <div className="flex flex-col text-left">
-              <span className="text-[10px] uppercase tracking-wider text-slate-400">Email Us</span>
-              <span className="text-sm font-semibold text-slate-200">{settings.email}</span>
+              <span className="text-[9px] font-bold uppercase tracking-widest text-slate-500 group-hover:text-rose-400/70 transition-colors">Email Us</span>
+              <span className="text-sm font-bold text-slate-200">{settings.email}</span>
             </div>
           </a>
 
-          {/* Admin Access Panel Button */}
-          {isAdminLoggedIn ? (
-            <button
-              onClick={onLogout}
-              className="flex items-center gap-2 px-4 py-2 border border-rose-500 text-rose-400 hover:bg-rose-950 font-medium rounded-lg text-xs transition"
-            >
-              <ShieldAlert className="w-3.5 h-3.5" /> Logout Admin
-            </button>
-          ) : (
-            <button
-              onClick={onOpenAdmin}
-              className="flex items-center gap-2 px-4 py-2 border border-slate-700 hover:border-amber-500 text-slate-300 hover:text-amber-400 font-medium rounded-lg text-xs transition"
-            >
-              <ShieldAlert className="w-3.5 h-3.5" /> Admin Panel
-            </button>
-          )}
+          <div className="w-px h-8 bg-white/10 mx-2 shrink-0" />
+
+          {/* Saint Therese Image */}
+          <div className="relative flex items-center justify-center shrink-0 w-16 h-16 md:w-20 md:h-20 ml-2">
+            <div className="absolute inset-0 bg-amber-500/20 blur-md rounded-full" />
+            <img 
+              src={thereseImg} 
+              alt="Saint Thérèse" 
+              className="w-16 h-16 md:w-20 md:h-20 rounded-full border-[3px] border-amber-400/90 object-cover shadow-[0_0_15px_rgba(251,191,36,0.3)] relative z-10"
+            />
+          </div>
         </div>
 
         {/* Mobile controls */}
         <div className="flex lg:hidden items-center justify-between w-full sm:w-auto gap-4 sm:ml-auto">
-          {/* Quick Support Phone for mobile */}
-          <a href={`tel:${settings.supportDesk}`} className="p-2 bg-slate-800 text-amber-400 rounded-lg sm:hidden">
-            <Phone className="w-5 h-5" />
+          {/* Instagram Link for mobile */}
+          <a href="https://instagram.com/cml_kaliyar_mekhala" target="_blank" rel="noopener noreferrer" className="p-2 bg-slate-800 text-pink-400 rounded-lg sm:hidden">
+            <Instagram className="w-5 h-5" />
           </a>
 
-          {isAdminLoggedIn ? (
-            <button
-              onClick={onLogout}
-              className="px-3 py-1.5 border border-rose-500 text-rose-400 text-xs font-semibold rounded-md"
-            >
-              Logout
-            </button>
-          ) : (
-            <button
-              onClick={onOpenAdmin}
-              className="px-3 py-1.5 border border-slate-700 text-slate-300 hover:text-amber-400 text-xs font-semibold rounded-md"
-            >
-              Admin
-            </button>
-          )}
+          {/* Saint Therese Image Mobile */}
+          <div className="relative flex items-center justify-center shrink-0 w-16 h-16">
+            <div className="absolute inset-0 bg-amber-500/20 blur-md rounded-full" />
+            <img 
+              src={thereseImg} 
+              alt="Saint Thérèse" 
+              className="w-16 h-16 rounded-full border-[3px] border-amber-400/90 object-cover shadow-[0_0_10px_rgba(251,191,36,0.3)] relative z-10"
+            />
+          </div>
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -267,11 +263,11 @@ export default function Header({
                         onClick={() => handleLinkClick('chosen')}
                         className={`flex items-center gap-1.5 px-3 xl:px-5 py-2 xl:py-2.5 rounded-full text-[11px] xl:text-xs font-black tracking-wider transition-all duration-300 whitespace-nowrap cursor-pointer shrink-0 border-2 select-none ${
                           activeTab === 'chosen'
-                            ? 'bg-slate-900 border-slate-900 text-white shadow-lg shadow-slate-900/35 hover:bg-slate-850 hover:border-slate-850 ring-2 ring-slate-855/15'
+                              ? 'bg-slate-900 border-slate-900 text-white shadow-lg shadow-slate-900/35 hover:bg-slate-800 hover:border-slate-800 ring-2 ring-slate-900/15'
                             : 'bg-indigo-50/90 border-indigo-300 text-indigo-700 hover:text-indigo-800 hover:bg-indigo-100/95 hover:border-indigo-400 shadow-5xs'
                         }`}
                       >
-                        <Sparkles className={`w-3.5 h-3.5 transition-transform duration-300 group-hover:scale-110 ${activeTab === 'chosen' ? 'text-amber-305' : 'text-indigo-700'}`} />
+                        <Sparkles className={`w-3.5 h-3.5 transition-transform duration-300 group-hover:scale-110 ${activeTab === 'chosen' ? 'text-amber-300' : 'text-indigo-700'}`} />
                         <span>CHOSEN 2026</span>
                       </button>
                       {activeTab === 'chosen' && (
