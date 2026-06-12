@@ -21,16 +21,14 @@ import ChosenView from './components/ChosenView';
 import { ShieldCheck, Lock, Activity, KeyRound } from 'lucide-react';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState(() => {
-    return window.location.pathname === '/admin' ? 'admin' : 'home';
-  });
+  const [activeTab, setActiveTab] = useState('home');
   const [loading, setLoading] = useState(true);
   
   // Database State
   const [dbData, setDbData] = useState<any>({
     settings: {
       supportDesk: '+91 94470 12345',
-      email: 'cmlkaliyarmekhala@gmail.com',
+      email: 'contact@cmlkaliyar.org',
       mottoPrimary: 'സ്നേഹം • ത്യാഗം',
       mottoSecondary: 'സേവനം • സഹനം',
       heroIntro: 'ഓരോ പ്രവൃത്തിയിലൂടെയും മിഷനറി ചൈതന്യം പകർന്നുനൽകിക്കൊണ്ട് നമുക്ക് വിശ്വാസത്തിന്റെ ഒരു കൂട്ടായ്മ പടുത്തുയർത്താം.',
@@ -46,9 +44,7 @@ export default function App() {
     downloads: [],
     logs: [],
     results: [],
-    chosenRegistrations: [],
-    registrations: [],
-    competitionStatuses: {}
+    chosenRegistrations: []
   });
 
   // Admin Session States

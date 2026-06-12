@@ -7,10 +7,6 @@ import express from 'express';
 import path from 'path';
 import fs from 'fs';
 import { createServer as createViteServer } from 'vite';
-import multer from 'multer';
-import { PDFParse } from 'pdf-parse';
-
-const upload = multer({ storage: multer.memoryStorage() });
 
 const app = express();
 const PORT = 3000;
@@ -22,8 +18,7 @@ app.use(express.json());
 const defaultUsers = [
   { email: 'joelveliyath05@gmail.com', name: 'Joel Veliyath', role: 'Super Admin', password: 'CML' },
   { email: 'admin@cmlkaliyar.org', name: 'Mekhala Office Bearer', role: 'Admin', password: 'CMLKaliyar#2026' },
-  { email: 'editor@cmlkaliyar.org', name: 'Editor Kaliyar', role: 'Editor', password: 'CML' },
-  { email: 'kalolsavam@cmlkaliyar.org', name: 'Kalolsavam Coordinator', role: 'Kalolsavam Editor', password: 'CML' }
+  { email: 'editor@cmlkaliyar.org', name: 'Editor Kaliyar', role: 'Editor', password: 'CML' }
 ];
 
 // Initial Seed Data
@@ -65,7 +60,7 @@ const initialDB = {
       title: 'Mekhala Leaders Workshop Concluded at St. Marys Hall Kaliyar',
       body: 'The annual leadership seminar and training workshop for parish unit bearers of Cherupushpa Mission League Kaliyar Mekhala was held successfully. Over 80 student leaders and animator sisters from 11 parish units participated. Rev. Fr. Mathew Elanjimattom inaugurated the session, urging youngsters to embrace the missionary spirit in their daily routines, embodying the CML ideals of Love, Sacrifice, Service, and Suffering.',
       category: 'Workshop',
-      imageUrl: 'https://images.unsplash.com/photo-1548625149-fc4a29cf7092?w=400',
+      imageUrl: '/src/assets/images/st_therese_of_lisieux_1780072293326.png',
       date: '2026-05-24',
       isFeatured: true
     },
@@ -74,7 +69,7 @@ const initialDB = {
       title: 'Golden Jubilee Celebration Preparations Commences',
       body: 'CML Kaliyar Mekhala has officially formed the executive committee for planning the upcoming Golden Jubilee celebrations. Various spiritual, social service, and literary events will be hosted throughout the academic year. Bishop of Kothamangalam Diocese will join the central opening ceremony.',
       category: 'Celebration',
-      imageUrl: 'https://images.unsplash.com/photo-1548625149-fc4a29cf7092?w=400',
+      imageUrl: '/src/assets/images/st_therese_of_lisieux_1780072293326.png',
       date: '2026-05-20',
       isFeatured: false
     }
@@ -142,19 +137,56 @@ const initialDB = {
     }
   ],
   units: [
-    { id: 'KYR01', name: 'Kaliyar', patronSaint: 'Holy Mary', contactNumber: '+91', bgPhoto: 'https://images.unsplash.com/photo-1438032005730-c779502df39b?w=400', stats: { members: 0, families: 0, directorsCount: 0 }, description: 'Kaliyar Unit', orderIndex: 0 },
-    { id: 'KYR02', name: 'Kadavoor', patronSaint: 'St. George', contactNumber: '+91', bgPhoto: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400', stats: { members: 0, families: 0, directorsCount: 0 }, description: 'Kadavoor Unit', orderIndex: 1 },
-    { id: 'KYR03', name: 'Kodikulam', patronSaint: 'St. George', contactNumber: '+91', bgPhoto: 'https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=400', stats: { members: 0, families: 0, directorsCount: 0 }, description: 'Kodikulam Unit', orderIndex: 2 },
-    { id: 'KYR04', name: 'Koduvely', patronSaint: 'St. Mary', contactNumber: '+91', bgPhoto: 'https://images.unsplash.com/photo-1478147427282-58a87a120781?w=400', stats: { members: 0, families: 0, directorsCount: 0 }, description: 'Koduvely Unit', orderIndex: 3 },
-    { id: 'KYR05', name: 'Mullaringad', patronSaint: 'St. Joseph', contactNumber: '+91', bgPhoto: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400', stats: { members: 0, families: 0, directorsCount: 0 }, description: 'Mullaringad Unit', orderIndex: 4 },
-    { id: 'KYR06', name: 'Mundanmudy', patronSaint: 'St. Thomas', contactNumber: '+91', bgPhoto: 'https://images.unsplash.com/photo-1438032005730-c779502df39b?w=400', stats: { members: 0, families: 0, directorsCount: 0 }, description: 'Mundanmudy Unit', orderIndex: 5 },
-    { id: 'KYR07', name: 'Njarakkad', patronSaint: 'St. Sebastian', contactNumber: '+91', bgPhoto: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400', stats: { members: 0, families: 0, directorsCount: 0 }, description: 'Njarakkad Unit', orderIndex: 6 },
-    { id: 'KYR08', name: 'Paingottoor', patronSaint: 'St. Antony', contactNumber: '+91', bgPhoto: 'https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=400', stats: { members: 0, families: 0, directorsCount: 0 }, description: 'Paingottoor Unit', orderIndex: 7 },
-    { id: 'KYR09', name: 'Punnamattam', patronSaint: 'St. Mary', contactNumber: '+91', bgPhoto: 'https://images.unsplash.com/photo-1478147427282-58a87a120781?w=400', stats: { members: 0, families: 0, directorsCount: 0 }, description: 'Punnamattam Unit', orderIndex: 8 },
-    { id: 'KYR10', name: 'Rajagiri', patronSaint: 'St. Joseph', contactNumber: '+91', bgPhoto: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400', stats: { members: 0, families: 0, directorsCount: 0 }, description: 'Rajagiri Unit', orderIndex: 9 },
-    { id: 'KYR11', name: 'Thennathoor', patronSaint: 'St. Jude', contactNumber: '+91', bgPhoto: 'https://images.unsplash.com/photo-1438032005730-c779502df39b?w=400', stats: { members: 0, families: 0, directorsCount: 0 }, description: 'Thennathoor Unit', orderIndex: 10 },
-    { id: 'KYR12', name: 'Thommankuthu', patronSaint: 'St. Thomas', contactNumber: '+91', bgPhoto: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400', stats: { members: 0, families: 0, directorsCount: 0 }, description: 'Thommankuthu Unit', orderIndex: 11 },
-    { id: 'KYR13', name: 'Vannappuram', patronSaint: 'St. Sebastian', contactNumber: '+91', bgPhoto: 'https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=400', stats: { members: 0, families: 0, directorsCount: 0 }, description: 'Vannappuram Unit', orderIndex: 12 },
+    {
+      id: 'unit-1',
+      name: 'St. Marys Church, Kaliyar',
+      patronSaint: 'Holy Mary',
+      contactNumber: '+91 94475 22110',
+      bgPhoto: 'https://images.unsplash.com/photo-1438032005730-c779502df39b?w=400',
+      stats: { members: 320, families: 180, directorsCount: 3 },
+      description: 'Mekhala Headquarters. Extremely active unit leading spiritual quiz groups, social volunteering drives, and charity works in Kaliyar parish.',
+      orderIndex: 0
+    },
+    {
+      id: 'unit-2',
+      name: 'St. Sebastian Church, Vannappuram',
+      patronSaint: 'St. Sebastian',
+      contactNumber: '+91 94460 30040',
+      bgPhoto: 'https://images.unsplash.com/photo-1548625361-155deee223d5?w=400',
+      stats: { members: 410, families: 220, directorsCount: 4 },
+      description: 'The largest parish unit in Kaliyar Mekhala, consistently winning laurels in literary (Sahithyamalsaram) and cultural stages.',
+      orderIndex: 1
+    },
+    {
+      id: 'unit-3',
+      name: 'St. George Church, Kodikulam',
+      patronSaint: 'St. George',
+      contactNumber: '+91 98451 12233',
+      bgPhoto: 'https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=400',
+      stats: { members: 195, families: 110, directorsCount: 2 },
+      description: 'A dedicated unit known for exceptional Holy Childhood missionary savings bank accounts and pious service works.',
+      orderIndex: 2
+    },
+    {
+      id: 'unit-4',
+      name: 'St. Augustine Church, Karimannoor',
+      patronSaint: 'St. Augustine',
+      contactNumber: '+91 80753 99881',
+      bgPhoto: 'https://images.unsplash.com/photo-1478147427282-58a87a120781?w=400',
+      stats: { members: 350, families: 195, directorsCount: 3 },
+      description: 'Historically significant unit that regularly produces excellent theatrical performances and organizes regional mission retreats.',
+      orderIndex: 3
+    },
+    {
+      id: 'unit-5',
+      name: 'St. Thomas Church, Thommankuthu',
+      patronSaint: 'St. Thomas',
+      contactNumber: '+91 94471 21212',
+      bgPhoto: 'https://images.unsplash.com/photo-1501535033-a593e6afb94d?w=400',
+      stats: { members: 140, families: 80, directorsCount: 2 },
+      description: 'Set in a beautiful scenic tourism belt, this unit excels in nature volunteering and holy standard-keeping classes.',
+      orderIndex: 4
+    }
   ],
   events: [
     {
@@ -165,7 +197,7 @@ const initialDB = {
       time: '09:00 AM - 05:00 PM',
       venue: 'St. Augustine Higher Secondary School, Karimannoor',
       description: 'The grand annual cultural fiesta of Kaliyar Mekhala where hundreds of children showcase their Talents in group song, Margam Kali, Elocution, Painting, and Bible Skits. Registrations are open through unit secretaries.',
-      imageUrl: 'https://images.unsplash.com/photo-1548625149-fc4a29cf7092?w=400'
+      imageUrl: '/src/assets/images/st_therese_of_lisieux_1780072293326.png'
     },
     {
       id: 'ev-2',
@@ -175,7 +207,7 @@ const initialDB = {
       time: '04:30 PM - 07:30 PM',
       venue: 'St. Mary’s Forane Church HQ, Kaliyar',
       description: 'Solemn Holy Mass, Novena, Candlelight procession, and distribution of rose petals. Followed by annual missionary award announcement.',
-      imageUrl: 'https://images.unsplash.com/photo-1548625149-fc4a29cf7092?w=400'
+      imageUrl: '/src/assets/images/st_therese_of_lisieux_1780072293326.png'
     },
     {
       id: 'ev-3',
@@ -185,7 +217,7 @@ const initialDB = {
       time: '10:00 AM',
       venue: 'St. George Parish, Kodikulam',
       description: 'Literary competition focusing on Malayalam Essay Writing, Bible Verse recitation, Storytelling, and Mission Poetry. Vannappuram Unit emerged Overall Champions.',
-      imageUrl: 'https://images.unsplash.com/photo-1548625149-fc4a29cf7092?w=400',
+      imageUrl: '/src/assets/images/st_therese_of_lisieux_1780072293326.png',
       summary: 'Vannappuram parish unit scored 112 points to win the rolling trophy. Kodikulam secured second place with 84 points. Bishop of Kothamangalam presented the trophies.'
     }
   ],
@@ -195,14 +227,14 @@ const initialDB = {
       title: 'CML Mekhala Kalolsavam Highlights',
       category: 'Arts & Culture',
       description: 'Spectacular visual memories of theatrical plays, religious songs, and cultural quiz stages.',
-      coverImageUrl: 'https://images.unsplash.com/photo-1548625149-fc4a29cf7092?w=400'
+      coverImageUrl: '/src/assets/images/st_therese_of_lisieux_1780072293326.png'
     },
     {
       id: 'alb-2',
       title: 'Mekhala Leaders Training Camp',
       category: 'Seminars',
       description: 'Nurturing future church leaders with high spiritual morals, team building, and social values.',
-      coverImageUrl: 'https://images.unsplash.com/photo-1548625149-fc4a29cf7092?w=400'
+      coverImageUrl: '/src/assets/images/st_therese_of_lisieux_1780072293326.png'
     }
   ],
   galleryImages: [
@@ -224,7 +256,7 @@ const initialDB = {
       id: 'img-3',
       albumId: 'alb-2',
       title: 'Inspirations lecture under roses painting',
-      imageUrl: 'https://images.unsplash.com/photo-1548625149-fc4a29cf7092?w=400',
+      imageUrl: '/src/assets/images/st_therese_of_lisieux_1780072293326.png',
       createdAt: '2026-05-24'
     }
   ],
@@ -257,8 +289,6 @@ const initialDB = {
       description: 'Prescribed report form to document member collections, missionary box stats, and unit activities.'
     }
   ],
-  registrations: [],
-  competitionStatuses: {},
   logs: [
     {
       id: 'log-1',
@@ -372,9 +402,6 @@ function loadDatabase() {
   try {
     const raw = fs.readFileSync(DB_FILE, 'utf-8');
     const parsed = JSON.parse(raw);
-    if (!parsed.results) parsed.results = [];
-    if (!parsed.registrations) parsed.registrations = [];
-    if (!parsed.competitionStatuses) parsed.competitionStatuses = {};
     if (!parsed.results) {
       parsed.results = initialDB.results;
       fs.writeFileSync(DB_FILE, JSON.stringify(parsed, null, 2), 'utf-8');
@@ -442,148 +469,6 @@ app.post('/api/save-database', (req, res) => {
   res.json({ success: true, message: 'Database persistent save success' });
 });
 
-function escapeRegex(text: string) {
-  return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-
-function parseParticipantsFromText(text: string) {
-  const knownUnits = [
-    'Kaliyar', 'Kadavoor', 'Kodikulam', 'Koduvely', 'Mullaringad', 'Mundanmudy',
-    'Njarakkad', 'Paingottoor', 'Punnamattam', 'Rajagiri', 'Thennathoor',
-    'Thommankuthu', 'Vannappuram'
-  ];
-
-  const lines = text.split(/\r?\n/).map((line) => line.trim()).filter((line) => line.length > 0);
-  const participants: any[] = [];
-  let currentEvent = '';
-
-  for (let index = 0; index < lines.length; index++) {
-    const line = lines[index];
-
-    if (/ - KALIYAR REGION$/i.test(line) || /^(BIBLE READING|MISSION QUIZ|SOLO|SPEECH|DEBATE)/i.test(line)) {
-      currentEvent = line;
-      continue;
-    }
-
-    if (/^#\s*Name/i.test(line)) {
-      continue;
-    }
-
-    const rowMatch = line.match(/^(\d+)\.\s*(.*)$/);
-    if (!rowMatch) {
-      continue;
-    }
-
-    const entryLines = [rowMatch[2]];
-    let nextIndex = index + 1;
-    while (
-      nextIndex < lines.length &&
-      !/^(\d+)\./.test(lines[nextIndex]) &&
-      !/ - KALIYAR REGION$/i.test(lines[nextIndex]) &&
-      !/^#\s*Name/i.test(lines[nextIndex])
-    ) {
-      entryLines.push(lines[nextIndex]);
-      nextIndex += 1;
-    }
-    index = nextIndex - 1;
-
-    const detailLine = entryLines[entryLines.length - 1];
-    const cmlIdMatch = detailLine.match(/\bKYR\d+\b/i);
-    const dobMatch = detailLine.match(/\b\d{4}-\d{2}-\d{2}\b/);
-    if (!cmlIdMatch || !dobMatch) {
-      continue;
-    }
-
-    const cmlId = cmlIdMatch[0].toUpperCase();
-    const dob = dobMatch[0];
-    const unitMatch = knownUnits.find((unit) => new RegExp('\\b' + escapeRegex(unit) + '\\b', 'i').test(detailLine));
-    const unit = unitMatch || '';
-
-    const prefixLines = entryLines.slice(0, -1);
-    let nameLines = prefixLines;
-    let houseLines: string[] = [];
-    const commaLineIndex = prefixLines.findIndex((l) => /,\s*$/.test(l));
-
-    if (commaLineIndex >= 0) {
-      nameLines = prefixLines.slice(0, commaLineIndex + 1);
-      houseLines = prefixLines.slice(commaLineIndex + 1);
-    } else if (prefixLines.length > 1) {
-      nameLines = [prefixLines[0]];
-      houseLines = prefixLines.slice(1);
-    }
-
-    const competitorName = nameLines.join(' ').replace(/\s+/g, ' ').replace(/,\s*$/g, '').trim();
-    let houseName = houseLines.join(' ').replace(/\s+/g, ' ').trim();
-
-    if (!houseName) {
-      houseName = detailLine
-        .replace(cmlId, '')
-        .replace(dob, '')
-        .replace(unit, '')
-        .replace(/\b\d+\b/g, '')
-        .trim();
-    }
-
-    let section = '';
-    const sectionMatch = currentEvent.match(/\b(SUB JUNIOR|SUPER SENIOR|JUNIOR|SENIOR)\b\s*(BOYS|GIRLS)?/i);
-    if (sectionMatch) {
-      section = sectionMatch[0].trim();
-    }
-
-    participants.push({
-      id: `reg_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
-      eventName: currentEvent,
-      section,
-      competitorName,
-      houseName,
-      dob,
-      cmlId,
-      shakhaId: cmlId.substring(0, 5)
-    });
-  }
-
-  return participants;
-}
-
-// PDF Parsing Endpoint
-app.post('/api/parse-pdf', upload.single('file'), async (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ success: false, error: 'No PDF file uploaded' });
-  }
-  try {
-    const pdf = new PDFParse(new Uint8Array(req.file.buffer));
-    const data = await pdf.getText();
-    const text = typeof data === 'string' ? data : (data && data.text) || '';
-
-    if (!text || text.trim().length === 0) {
-      return res.status(400).json({ success: false, error: 'PDF file is empty or contains no readable text' });
-    }
-    
-    const participants = parseParticipantsFromText(text);
-
-    if (participants.length === 0) {
-      return res.status(400).json({ success: false, error: 'No participants found in PDF. Please ensure the PDF has the correct format.' });
-    }
-
-    const db = loadDatabase();
-    let newCount = 0;
-    for (const p of participants) {
-       // Avoid duplicates based on cmlId and eventName
-       const existing = db.registrations.find((r: any) => r.cmlId === p.cmlId && r.eventName === p.eventName);
-       if (!existing) {
-           db.registrations.push(p);
-           newCount++;
-       }
-    }
-    saveDatabase(db);
-
-    res.json({ success: true, participants: participants, count: newCount, totalExtracted: participants.length });
-  } catch (error) {
-    console.error('PDF parsing error:', error);
-    res.status(500).json({ success: false, error: 'Failed to parse PDF: ' + (error instanceof Error ? error.message : 'Unknown error') });
-  }
-});
-
 // Vite Middleware for development
 async function startServer() {
   if (process.env.NODE_ENV !== 'production') {
@@ -593,9 +478,6 @@ async function startServer() {
     });
     app.use(vite.middlewares);
   } else {
-    // Ensure assets are served under /src/assets in prod for hardcoded DB paths
-    app.use('/src/assets', express.static(path.join(process.cwd(), 'src/assets')));
-    
     const distPath = path.join(process.cwd(), 'dist');
     app.use(express.static(distPath));
     app.get('*', (req, res) => {

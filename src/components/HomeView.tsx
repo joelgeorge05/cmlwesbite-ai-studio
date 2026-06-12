@@ -25,8 +25,7 @@ import {
   MapPin,
   Bell,
   Download,
-  Info,
-  UserCheck
+  Info
 } from 'lucide-react';
 import {
   OfficeBearer,
@@ -39,16 +38,9 @@ import {
   PortalSettings
 } from '../types';
 
-import flagImg from '../assets/images/flag.jpg';
-import logoImg from '../assets/images/logo.jpg';
-import chosenImg from '../assets/images/chosen_leaders.webp';
-
-import thereseImg from '../assets/images/st_therese.png';
-const groupPhotoImg = chosenImg;
-const cmlLogoImg = logoImg;
-import founderPriestImg from '../assets/images/director.png';
-import founderLaymanImg from '../assets/images/founder.png';
-const saintLittleFlowerImg = thereseImg;
+import thereseImg from '../assets/images/st_therese_of_lisieux_1780072293326.png';
+import groupPhotoImg from '../assets/images/regenerated_image_1780418817430.webp';
+import cmlLogoImg from '../assets/images/regenerated_image_1780235265355.jpg';
 
 interface HomeViewProps {
   settings: PortalSettings;
@@ -288,85 +280,64 @@ export default function HomeView({
                 </div>
               </div>
 
-              {/* Premium Glassmorphic Quote Card */}
-              <div className="relative group p-6 sm:p-8 rounded-3xl bg-white/60 backdrop-blur-xl border border-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] max-w-xl lg:max-w-none mx-auto lg:mx-0 text-left overflow-hidden transition-all duration-500 hover:shadow-[0_8px_40px_rgb(0,0,0,0.08)] hover:-translate-y-1">
-                {/* Background glow effects */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-amber-400/10 rounded-full blur-2xl group-hover:bg-amber-400/20 transition-colors duration-500" />
-                <div className="absolute bottom-0 left-0 w-32 h-32 bg-rose-500/10 rounded-full blur-2xl group-hover:bg-rose-500/20 transition-colors duration-500" />
-                
-                {/* Large decorative quote marks */}
-                <div className="absolute -right-2 -bottom-8 text-9xl text-stone-900/[0.03] font-serif pointer-events-none select-none z-0 transform group-hover:scale-110 group-hover:-translate-y-2 group-hover:text-amber-500/10 transition-all duration-700">
+              {/* Beautiful clean high-contrast Quote card */}
+              <div className="relative p-4 sm:p-5 rounded-2xl bg-stone-50 border border-stone-200/80 shadow-xs max-w-xl lg:max-w-none mx-auto lg:mx-0 text-left overflow-hidden">
+                <div className="absolute right-4 -bottom-6 text-7xl text-stone-200/40 font-serif pointer-events-none select-none z-0">
                   ”
                 </div>
-                
-                {/* Left glowing border */}
-                <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-amber-400 via-rose-500 to-rose-700 rounded-r-full shadow-[2px_0_10px_rgba(244,63,94,0.4)]" />
-                
-                <p className="text-stone-800 text-lg sm:text-xl font-bold font-malayalam leading-relaxed relative z-10 pl-2 tracking-wide group-hover:text-stone-950 transition-colors duration-300">
+                <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-amber-500 via-amber-600 to-rose-600 rounded-l-full" />
+                <p className="text-stone-800 text-base sm:text-lg font-bold font-anek leading-relaxed relative z-10 pl-2 tracking-wide">
                   "സഭയെ സ്നേഹിക്കുക ലോകത്തിൽ സാക്ഷികളാകുക"
                 </p>
               </div>
 
             </div>
 
-            <div className="flex flex-col gap-6 mt-4">
-              {/* Premium CTA Buttons */}
-              <div className="flex flex-col sm:flex-row items-center gap-4 w-full max-w-md lg:max-w-none mx-auto lg:mx-0">
+            <div className="flex flex-col gap-4 mt-2">
+              {/* Clean CTA Button actions */}
+              <div className="flex flex-col sm:flex-row items-center gap-3 w-full max-w-md lg:max-w-none mx-auto lg:mx-0">
                 <button
                   onClick={() => setActiveTab('units')}
-                  className="relative group w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-rose-600 to-rose-800 text-white font-extrabold text-[13px] tracking-wider uppercase rounded-2xl transition-all duration-300 transform active:scale-95 flex items-center justify-center gap-3 cursor-pointer border border-rose-500/50 shadow-[0_10px_20px_rgba(225,29,72,0.3)] hover:shadow-[0_15px_30px_rgba(225,29,72,0.4)] hover:-translate-y-1 overflow-hidden"
+                  className="group w-full sm:w-auto px-8 py-3.5 bg-rose-700 hover:bg-rose-800 text-white font-extrabold text-[12px] tracking-wider uppercase rounded-xl transition-all duration-300 transform active:scale-98 hover:shadow-lg hover:shadow-rose-900/20 flex items-center justify-center gap-2 cursor-pointer hover:-translate-y-0.5 border border-rose-800"
                 >
-                  <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out" />
-                  <span className="relative z-10 flex items-center gap-2">
-                    <MapPin className="w-4 h-4" />
-                    Parish Units
-                  </span>
-                  <ArrowRight className="w-4.5 h-4.5 relative z-10 transition-transform duration-300 group-hover:translate-x-1.5" />
+                  <span>Parish Units</span>
+                  <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                 </button>
 
                 <button
                   onClick={() => setActiveTab('history')}
-                  className="relative group w-full sm:w-auto px-8 py-4 bg-white hover:bg-stone-50 border border-stone-200/80 text-stone-900 font-extrabold text-[13px] tracking-wider uppercase rounded-2xl transition-all duration-300 transform active:scale-95 flex items-center justify-center gap-3 cursor-pointer shadow-[0_4px_10px_rgba(0,0,0,0.03)] hover:shadow-[0_10px_20px_rgba(0,0,0,0.06)] hover:-translate-y-1 hover:border-amber-500/30 overflow-hidden"
+                  className="group w-full sm:w-auto px-8 py-3.5 bg-white hover:bg-stone-50 border-2 border-stone-200 hover:border-amber-500/40 text-stone-900 font-extrabold text-[12px] tracking-wider uppercase rounded-xl transition-all duration-300 transform active:scale-98 hover:shadow-md flex items-center justify-center gap-2 cursor-pointer hover:-translate-y-0.5"
                 >
-                  <div className="absolute inset-0 bg-amber-50/50 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out" />
-                  <span className="relative z-10 flex items-center gap-2">
-                    <History className="w-4 h-4 text-stone-400 group-hover:text-amber-500 transition-colors" />
-                    Our Legacy
-                  </span>
-                  <ArrowRight className="w-4.5 h-4.5 text-amber-500 relative z-10 transition-transform duration-300 group-hover:translate-x-1.5" />
+                  <span>Our Legacy</span>
+                  <ArrowRight className="w-4 h-4 text-amber-500 transition-transform duration-300 group-hover:translate-x-1" />
                 </button>
               </div>
 
-              {/* Enhanced Quick Portals */}
-              <div className="flex flex-col sm:flex-row items-center gap-4 pt-6 border-t border-stone-200/60 w-full max-w-xl lg:max-w-none mx-auto lg:mx-0">
-                <span className="text-[11px] font-mono font-extrabold text-stone-400 uppercase tracking-widest flex items-center gap-2">
-                  <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                  Quick Portals
+              {/* Minimal quick access badges with clean separation */}
+              <div className="flex items-center gap-2.5 flex-wrap justify-center lg:justify-start pt-4 border-t border-stone-200/80 w-full border-dashed max-w-xl lg:max-w-none mx-auto lg:mx-0">
+                <span className="text-[10px] font-mono font-bold text-stone-400 uppercase tracking-widest leading-none shrink-0 sm:mr-1 font-semibold">
+                  QUICK PORTALS:
                 </span>
-                <div className="flex flex-wrap justify-center sm:justify-start gap-4">
-                  <button
-                    id="portal-kalolsavam-btn"
-                    onClick={() => setActiveTab('kalolsavam')}
-                    className="group relative flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 text-white rounded-full text-[11px] font-black uppercase tracking-widest transition-all duration-300 cursor-pointer active:scale-95 hover:-translate-y-1 shadow-[0_8px_20px_rgba(225,29,72,0.3)] hover:shadow-[0_15px_30px_rgba(225,29,72,0.45)] overflow-hidden border border-rose-400/30 ring-2 ring-rose-500/20"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-[150%] group-hover:translate-x-[150%] transition-transform duration-700 ease-in-out skew-x-[-20deg]" />
-                    <span className="relative z-10 flex items-center justify-center p-1.5 bg-white/20 backdrop-blur-md rounded-full group-hover:scale-110 transition-transform duration-300 shadow-inner">
-                      <Trophy className="w-4 h-4 text-white drop-shadow-md" />
-                    </span>
-                    <span className="relative z-10 drop-shadow-md text-white font-extrabold tracking-widest">KALOLSAVAM RESULTS</span>
-                  </button>
-                  <button
-                    id="portal-sahithyamalsaram-btn"
-                    onClick={() => setActiveTab('sahithyamalsaram')}
-                    className="group relative flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white rounded-full text-[11px] font-black uppercase tracking-widest transition-all duration-300 cursor-pointer active:scale-95 hover:-translate-y-1 shadow-[0_8px_20px_rgba(245,158,11,0.3)] hover:shadow-[0_15px_30px_rgba(245,158,11,0.45)] overflow-hidden border border-amber-400/30 ring-2 ring-amber-500/20"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-[150%] group-hover:translate-x-[150%] transition-transform duration-700 ease-in-out skew-x-[-20deg]" />
-                    <span className="relative z-10 flex items-center justify-center p-1.5 bg-white/20 backdrop-blur-md rounded-full group-hover:scale-110 transition-transform duration-300 shadow-inner">
-                      <BookOpen className="w-4 h-4 text-white drop-shadow-md" />
-                    </span>
-                    <span className="relative z-10 drop-shadow-md text-white font-extrabold tracking-widest">SAHITHYAMALSARAM</span>
-                  </button>
-                </div>
+                <button
+                  id="portal-kalolsavam-btn"
+                  onClick={() => setActiveTab('kalolsavam')}
+                  className="group flex items-center gap-2 px-4 py-2 bg-rose-50/80 hover:bg-rose-100/90 border border-rose-200 hover:border-rose-350 text-rose-950 rounded-2xl text-[11px] font-black uppercase tracking-wider transition-all duration-300 cursor-pointer active:scale-95 hover:-translate-y-0.5 shadow-3xs"
+                >
+                  <span className="p-1 bg-white rounded-lg shadow-5xs border border-rose-100 group-hover:scale-105 transition-transform duration-300 flex items-center justify-center">
+                    <Trophy className="w-3.5 h-3.5 text-rose-600" />
+                  </span>
+                  <span>Kalolsavam Results</span>
+                </button>
+                <button
+                  id="portal-sahithyamalsaram-btn"
+                  onClick={() => setActiveTab('sahithyamalsaram')}
+                  className="group flex items-center gap-2 px-4 py-2 bg-amber-50/80 hover:bg-amber-100/90 border border-amber-200 hover:border-amber-350 text-amber-950 rounded-2xl text-[11px] font-black uppercase tracking-wider transition-all duration-300 cursor-pointer active:scale-95 hover:-translate-y-0.5 shadow-3xs"
+                >
+                  <span className="p-1 bg-white rounded-lg shadow-5xs border border-amber-100 group-hover:scale-105 transition-transform duration-300 flex items-center justify-center">
+                    <BookOpen className="w-3.5 h-3.5 text-amber-600" />
+                  </span>
+                  <span>Sahithyamalsaram</span>
+                </button>
               </div>
             </div>
 
@@ -386,6 +357,7 @@ export default function HomeView({
                   src={groupPhotoImg}
                   alt="CML Kaliyar Mekhala Community Group at Jai Rani"
                   className="w-full h-full object-cover object-center relative z-0 transform group-hover/hero-frame:scale-[1.03] transition duration-1000 ease-out"
+                  referrerPolicy="no-referrer"
                 />
 
                 {/* Floating landmark information card in bottom left overlay */}
@@ -401,7 +373,21 @@ export default function HomeView({
                   </span>
                 </div>
 
-
+                {/* Parish statistics badge overlaid inside the image card */}
+                <div className="absolute top-4 right-4 z-20 bg-stone-950/90 backdrop-blur-md border border-amber-400/40 px-3.5 py-1.5 rounded-xl shadow-lg flex items-center gap-2 text-left">
+                  <div className="w-7 h-7 rounded-full overflow-hidden border border-amber-400/50 bg-white p-0.5 flex items-center justify-center select-none">
+                    <img
+                      src={cmlLogoImg}
+                      alt="CML Logo"
+                      className="w-full h-full object-contain rounded-full"
+                      referrerPolicy="no-referrer"
+                    />
+                  </div>
+                  <div className="flex flex-col leading-none select-none">
+                    <span className="text-[11px] font-mono font-bold text-stone-300">shakha</span>
+                    <span className="text-xs font-black text-amber-400 mt-0.5">13 active</span>
+                  </div>
+                </div>
 
               </div>
             </div>
@@ -420,25 +406,23 @@ export default function HomeView({
           <div className="absolute bottom-0 left-0 w-48 h-48 bg-amber-500/[0.02] rounded-full blur-3xl -z-10 pointer-events-none" />
 
           {/* Minimal Tab selector bar */}
-          <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-6 border-b border-rose-100/50 pb-6 relative">
-            <div className="absolute -inset-4 bg-gradient-to-r from-rose-500/5 via-amber-500/5 to-transparent blur-2xl -z-10 rounded-full" />
-            <div className="flex items-start gap-4">
-              <div className="p-3 bg-gradient-to-br from-rose-100 to-rose-50 border border-rose-200/60 text-rose-700 rounded-2xl shrink-0 shadow-[0_4px_20px_rgba(225,29,72,0.15)] mt-0.5 relative overflow-hidden group">
-                <div className="absolute inset-0 bg-gradient-to-br from-rose-400 to-rose-600 opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
-                <BookOpen className="w-6 h-6 text-rose-600 group-hover:scale-110 transition-transform duration-300" />
+          <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-5 border-b border-stone-200/60 pb-5">
+            <div className="flex items-start gap-3">
+              <div className="p-2 sm:p-2.5 bg-rose-50 border border-rose-100/80 text-rose-700 rounded-2xl shrink-0 shadow-5xs mt-0.5">
+                <BookOpen className="w-5 h-5 text-rose-600" />
               </div>
               <div className="flex flex-col">
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="text-[10px] font-mono font-black text-rose-600 tracking-widest uppercase px-2 py-0.5 bg-rose-50 rounded-full border border-rose-100/80 shadow-5xs">CREED STUDY HUB</span>
-                  <span className="w-2 h-2 rounded-full bg-rose-500 shadow-[0_0_8px_rgba(225,29,72,0.6)] animate-pulse" />
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] font-mono font-black text-rose-700 tracking-wider">CREED STUDY HUB</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />
                 </div>
-                <h3 className="font-display font-black text-xl sm:text-2xl text-stone-900 leading-tight tracking-tight mt-0.5 bg-clip-text text-transparent bg-gradient-to-r from-stone-900 to-stone-600">
+                <h3 className="font-display font-black text-lg sm:text-xl text-stone-900 leading-tight tracking-tight mt-0.5">
                   Insight into Cherupushpa Mission League
                 </h3>
               </div>
             </div>
             
-            <div className="flex flex-wrap gap-1.5 p-1.5 bg-white/60 backdrop-blur-md rounded-2xl border border-stone-200/60 w-full sm:w-auto shadow-sm">
+            <div className="flex flex-wrap gap-1.5 p-1 bg-stone-100/80 rounded-2xl border border-stone-200/40 w-full sm:w-auto">
               {[
                 { id: 'pillars', label: 'Spiritual Pillars', icon: Flame },
                 { id: 'history', label: 'History (1947)', icon: History },
@@ -451,15 +435,14 @@ export default function HomeView({
                   <button
                     key={tab.id}
                     onClick={() => setActiveCmlTab(tab.id)}
-                    className={`flex-1 sm:flex-initial px-4 py-2.5 text-xs font-bold rounded-xl transition-all duration-300 border cursor-pointer flex items-center justify-center gap-2 relative overflow-hidden ${
+                    className={`flex-1 sm:flex-initial px-4 py-2 text-xs font-bold rounded-xl transition-all duration-300 border cursor-pointer flex items-center justify-center gap-1.5 ${
                       isActive
-                        ? 'bg-rose-50/80 border-rose-200/80 text-rose-800 font-extrabold shadow-[0_2px_10px_rgba(225,29,72,0.1)] transform scale-[1.02]'
-                        : 'bg-transparent border-transparent text-stone-500 hover:text-stone-800 hover:bg-stone-50/80'
+                        ? 'bg-white border-stone-200 text-rose-800 font-extrabold shadow-sm transform scale-102'
+                        : 'bg-transparent border-transparent text-stone-600 hover:text-stone-900 hover:bg-white/40'
                     }`}
                   >
-                    {isActive && <div className="absolute inset-0 bg-gradient-to-r from-rose-400/10 to-amber-400/10" />}
-                    <IconComp className={`w-4 h-4 transition-all duration-300 relative z-10 ${isActive ? 'text-rose-600 drop-shadow-sm' : 'text-stone-400 group-hover:text-stone-600'}`} />
-                    <span className="whitespace-nowrap relative z-10">{tab.label}</span>
+                    <IconComp className={`w-3.5 h-3.5 transition-colors ${isActive ? 'text-rose-600' : 'text-stone-400'}`} />
+                    <span className="whitespace-nowrap">{tab.label}</span>
                   </button>
                 );
               })}
@@ -479,73 +462,55 @@ export default function HomeView({
               >
                 {/* Tab: Pillars block */}
                 {activeCmlTab === 'pillars' && (
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 w-full">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
                     {[
                       { 
                         title: 'Sneham (Love)', 
                         text: 'Personal prayer with Jesus expressed through genuine daily kindness to our neighborhood of families.', 
                         accent: 'from-rose-500 to-rose-600', 
-                        bgAccent: 'bg-rose-50',
-                        shadow: 'hover:shadow-[0_8px_30px_rgba(225,29,72,0.15)]',
-                        iconBg: 'bg-rose-100',
-                        iconColor: 'text-rose-600',
+                        bg: 'bg-rose-500/[0.02]',
                         num: '01'
                       },
                       { 
                         title: 'Thyagam (Sacrifice)', 
                         text: 'Putting aside short-term desires (sweets, phone screens) to contribute to parish mission boxes.', 
-                        accent: 'from-amber-500 to-amber-600', 
-                        bgAccent: 'bg-amber-50',
-                        shadow: 'hover:shadow-[0_8px_30px_rgba(245,158,11,0.15)]',
-                        iconBg: 'bg-amber-100',
-                        iconColor: 'text-amber-600',
+                        accent: 'from-amber-400 to-amber-500', 
+                        bg: 'bg-amber-500/[0.02]',
                         num: '02'
                       },
                       { 
                         title: 'Sevanam (Service)', 
                         text: 'Vibrant involvement in parish Liturgy as altar servers, helpers for catechists, and cleanup volunteers.', 
                         accent: 'from-emerald-500 to-emerald-600', 
-                        bgAccent: 'bg-emerald-50',
-                        shadow: 'hover:shadow-[0_8px_30px_rgba(16,185,129,0.15)]',
-                        iconBg: 'bg-emerald-100',
-                        iconColor: 'text-emerald-600',
+                        bg: 'bg-emerald-500/[0.02]',
                         num: '03'
                       },
                       { 
                         title: 'Sahanam (Suffering)', 
                         text: 'Cheerfully taking corrections, daily study constraints, and physical chores following St. Thérèse\'s Little Way.', 
-                        accent: 'from-sky-500 to-sky-600', 
-                        bgAccent: 'bg-sky-50',
-                        shadow: 'hover:shadow-[0_8px_30px_rgba(14,165,233,0.15)]',
-                        iconBg: 'bg-sky-100',
-                        iconColor: 'text-sky-600',
+                        accent: 'from-sky-400 to-sky-500', 
+                        bg: 'bg-sky-500/[0.02]',
                         num: '04'
                       }
                     ].map((p, idx) => (
                       <div 
                         key={idx} 
-                        className={`group/pillar p-6 rounded-3xl border border-stone-200/70 bg-white/60 backdrop-blur-lg ${p.shadow} hover:-translate-y-1 hover:border-stone-300 transition-all duration-500 flex flex-col gap-4 relative overflow-hidden`}
+                        className={`group/pillar p-4.5 rounded-2xl border border-stone-200/60 ${p.bg} hover:bg-white hover:border-stone-300 hover:shadow-xs transition-all duration-300 flex flex-col gap-3 relative overflow-hidden`}
                       >
-                        {/* Dynamic Top line accent */}
-                        <div className={`absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r ${p.accent} transform origin-left scale-x-0 group-hover/pillar:scale-x-100 transition-transform duration-500`} />
-                        <div className={`absolute top-0 inset-x-0 h-1 bg-gradient-to-r ${p.accent} opacity-30`} />
-                        
+                        {/* Dynamic Top line accent and numbers */}
+                        <div className={`absolute top-0 inset-x-0 h-1 bg-gradient-to-r ${p.accent}`} />
                         <div className="flex items-center justify-between">
-                          <span className="text-[10px] font-mono font-black text-stone-400 tracking-widest bg-stone-100 px-2.5 py-1 rounded-md group-hover/pillar:bg-stone-200 transition-colors">PILLAR {p.num}</span>
-                          <div className={`w-8 h-8 rounded-full ${p.iconBg} flex items-center justify-center opacity-0 transform translate-x-4 group-hover/pillar:opacity-100 group-hover/pillar:translate-x-0 transition-all duration-300 delay-100`}>
-                            <Flame className={`w-4 h-4 ${p.iconColor}`} />
-                          </div>
+                          <span className="text-[10px] font-mono font-extrabold text-stone-400 tracking-wider">PILLAR {p.num}</span>
+                          <span className="w-1.5 h-1.5 rounded-full bg-stone-350 group-hover/pillar:scale-125 transition-transform" />
                         </div>
-                        <div className="flex flex-col gap-2 mt-2">
-                          <h4 className="font-display font-extrabold text-base text-stone-900 group-hover/pillar:text-stone-950 transition-colors">
+                        <div className="flex flex-col gap-1.5">
+                          <h4 className="font-display font-extrabold text-sm text-stone-900 group-hover/pillar:text-rose-900 transition-colors">
                             {p.title}
                           </h4>
-                          <p className="text-stone-600 text-xs leading-relaxed font-semibold">
+                          <p className="text-stone-600 text-[11px] leading-relaxed font-semibold">
                             {p.text}
                           </p>
                         </div>
-                        {/* Hover glow effect in the background */}
-                        <div className={`absolute -bottom-8 -right-8 w-32 h-32 rounded-full bg-gradient-to-r ${p.accent} opacity-0 group-hover/pillar:opacity-10 blur-2xl transition-opacity duration-500 pointer-events-none`} />
                       </div>
                     ))}
                   </div>
@@ -553,74 +518,64 @@ export default function HomeView({
 
                 {/* Tab: History block */}
                 {activeCmlTab === 'history' && (
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 w-full items-stretch animate-fade-in relative z-10">
-                    <div className="lg:col-span-7 flex flex-col justify-between gap-6 relative">
-                      <div className="absolute -inset-4 bg-rose-500/5 blur-3xl -z-10 rounded-full pointer-events-none" />
-                      <div className="flex flex-col gap-3">
-                        <div className="flex items-center gap-2">
-                          <span className="flex items-center justify-center w-6 h-6 rounded-full bg-rose-100 text-rose-600 shadow-sm">
-                            <History className="w-3.5 h-3.5" />
-                          </span>
-                          <span className="text-[11px] font-mono font-black tracking-widest text-rose-600 uppercase">Vibrant Legacy since 1947</span>
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 w-full items-stretch">
+                    <div className="lg:col-span-7 flex flex-col justify-between gap-4">
+                      <div className="flex flex-col gap-2">
+                        <div className="flex items-center gap-1.5 text-rose-700">
+                          <History className="w-4 h-4" />
+                          <span className="text-[10px] font-mono font-bold tracking-wider uppercase">Vibrant Legacy since 1947</span>
                         </div>
-                        <h4 className="font-display font-black text-2xl sm:text-3xl text-stone-900 leading-tight">
-                          An Apostolic Lay Spark <br className="hidden sm:block" />
-                          <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-600 to-amber-600">In Kerala</span>
+                        <h4 className="font-display font-black text-base sm:text-lg text-stone-900 leading-tight">
+                          An Apostolic Lay Spark In Kerala
                         </h4>
-                        <p className="text-stone-600 text-sm leading-relaxed font-semibold max-w-xl">
+                        <p className="text-stone-600 text-xs sm:text-[13px] leading-relaxed font-semibold">
                           Formed in the sacred halls of Bharananganam shrine in 1947, right under the spiritual aegis of Saint Alphonsa, the Cherupushpa Mission League (CML) was pioneered to foster lay leadership and apostolic fire in younger generations. It has grown exponentially to become Asia's largest youth lay spiritual movement, counting over 2 million vibrant missionary apostles today.
                         </p>
                       </div>
 
                       {/* Timeline flow highlights */}
-                      <div className="grid grid-cols-3 gap-4 pt-2">
-                        {[
-                          { year: '1947', label: 'Founded', color: 'from-rose-500 to-rose-600' },
-                          { year: '2M+', label: 'Apostles', color: 'from-amber-500 to-amber-600' },
-                          { year: "Asia's #1", label: 'Lay Movement', color: 'from-indigo-500 to-indigo-600' }
-                        ].map((stat, i) => (
-                          <div key={i} className="group flex flex-col p-4 rounded-2xl bg-white/60 backdrop-blur-sm border border-stone-200/60 hover:bg-white hover:border-stone-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-                            <span className={`text-transparent bg-clip-text bg-gradient-to-br ${stat.color} font-display font-black text-xl sm:text-2xl drop-shadow-sm`}>{stat.year}</span>
-                            <span className="text-[10px] text-stone-500 font-bold uppercase tracking-widest mt-1">{stat.label}</span>
-                          </div>
-                        ))}
+                      <div className="grid grid-cols-3 gap-3 border-t border-stone-200/60 pt-4 mt-1">
+                        <div>
+                          <span className="text-rose-700 font-mono font-black text-sm block">1947</span>
+                          <span className="text-[9px] text-stone-500 font-bold uppercase tracking-wider">Founded</span>
+                        </div>
+                        <div>
+                          <span className="text-rose-700 font-mono font-black text-sm block">2M+</span>
+                          <span className="text-[9px] text-stone-500 font-bold uppercase tracking-wider">Apostles</span>
+                        </div>
+                        <div>
+                          <span className="text-rose-700 font-mono font-black text-sm block">Asia's #1</span>
+                          <span className="text-[9px] text-stone-500 font-bold uppercase tracking-wider">Lay Movement</span>
+                        </div>
                       </div>
                     </div>
 
-                    <div className="lg:col-span-5 group relative p-6 rounded-3xl bg-gradient-to-br from-stone-900 to-stone-800 border border-stone-700 flex flex-col justify-between shadow-[0_15px_40px_rgba(0,0,0,0.2)] overflow-hidden transition-all duration-500 hover:shadow-[0_20px_50px_rgba(225,29,72,0.15)]">
-                      <div className="absolute top-0 right-0 w-64 h-64 bg-rose-500/10 rounded-full blur-3xl -z-10 group-hover:bg-rose-500/20 transition-colors duration-700" />
-                      <div className="absolute -bottom-10 -right-4 text-stone-700/30 pointer-events-none select-none font-display font-black text-9xl transform -rotate-6 group-hover:rotate-0 group-hover:scale-110 transition-all duration-700">
+                    <div className="lg:col-span-5 bg-gradient-to-br from-stone-55 to-stone-100/70 border border-stone-200/55 p-5 rounded-2xl flex flex-col justify-between shadow-5xs relative overflow-hidden">
+                      <div className="absolute top-2 right-2 text-stone-200 pointer-events-none select-none font-display font-black text-7xl opacity-40 animate-pulse">
                         1947
                       </div>
-                      
-                      <div className="flex flex-col gap-4 relative z-10">
-                        <div className="flex items-center gap-2 mb-2">
-                          <div className="w-8 h-px bg-rose-500/50" />
-                          <h5 className="font-display font-extrabold text-xs uppercase tracking-widest text-rose-300">Honorary Founders</h5>
-                        </div>
-                        
-                        <div className="space-y-4 text-stone-200">
-                          <div className="flex items-center gap-3.5 p-3 rounded-xl bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 transition-colors duration-300">
-                            <img 
-                              src={founderPriestImg} 
-                              alt="Fr. Joseph Maliparambil" 
-                              className="w-12 h-12 rounded-full object-cover object-top border-2 border-rose-400/50 shadow-inner shrink-0 bg-white"
-                            />
-                            <div className="flex flex-col">
-                              <p className="font-black text-sm text-white leading-tight">Fr. Joseph Maliparambil</p>
-                              <p className="text-[11px] text-rose-200 font-semibold mt-0.5 tracking-wide">Founding Spiritual Director</p>
+                      <div className="flex flex-col gap-2 relative z-10">
+                        <h5 className="font-display font-bold text-xs uppercase tracking-wider text-rose-800">Honorary Founders</h5>
+                        <div className="space-y-3 mt-1 text-stone-800">
+                          <div className="flex items-start gap-2.5">
+                            <div className="w-1.5 h-1.5 rounded-full bg-rose-600 mt-1.5 shrink-0" />
+                            <div>
+                              <p className="font-bold text-xs text-stone-900 leading-none">Fr. Joseph Maliparambil</p>
+                              <p className="text-[10px] text-stone-500 font-semibold mt-0.5">The Founding Spiritual Director</p>
                             </div>
                           </div>
-                          
-                          <div className="flex items-center gap-3.5 p-3 rounded-xl bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 transition-colors duration-300">
-                            <img 
-                              src={founderLaymanImg} 
-                              alt="Mr. P.C. Abraham (Kunjettan)" 
-                              className="w-12 h-12 rounded-full object-cover object-top border-2 border-amber-400/50 shadow-inner shrink-0 bg-white"
-                            />
-                            <div className="flex flex-col">
-                              <p className="font-black text-sm text-white leading-tight">Mr. P.C. Abraham (Kunjettan)</p>
-                              <p className="text-[11px] text-amber-200 font-semibold mt-0.5 tracking-wide">Pioneering Lay Apostle</p>
+                          <div className="flex items-start gap-2.5">
+                            <div className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 shrink-0" />
+                            <div>
+                              <p className="font-bold text-xs text-stone-900 leading-none">Mr. P.C. Abraham (Kunjettan)</p>
+                              <p className="text-[10px] text-stone-500 font-semibold mt-0.5">Pioneering Lay Apostle & Leader</p>
+                            </div>
+                          </div>
+                          <div className="flex items-start gap-2.5">
+                            <div className="w-1.5 h-1.5 rounded-full bg-stone-500 mt-1.5 shrink-0" />
+                            <div>
+                              <p className="font-bold text-xs text-stone-900 leading-none">Saint Alphonsa</p>
+                              <p className="text-[10px] text-stone-500 font-semibold mt-0.5">Spiritual Mother & Guiding Inspiration</p>
                             </div>
                           </div>
                         </div>
@@ -634,10 +589,11 @@ export default function HomeView({
                   <div className="grid grid-cols-1 md:grid-cols-12 gap-6 w-full items-center">
                     <div className="md:col-span-4 flex items-center justify-center">
                       <div className="relative p-1.5 bg-white border border-stone-200 shadow-xs rounded-2xl flex items-center justify-center shrink-0 w-60 h-60 transform -rotate-1 hover:rotate-0 transition-transform duration-300 overflow-hidden">
-                        <img 
-                          src={saintLittleFlowerImg} 
-                          alt="St. Therese of Lisieux" 
-                          className="w-full h-full object-cover object-[center_20%] opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-out"
+                        <img
+                          src="/src/assets/images/saint_little_flower_1780503586974.png"
+                          alt="Saint Thérèse of Lisieux"
+                          className="w-full h-full object-cover rounded-xl"
+                          referrerPolicy="no-referrer"
                         />
                         <div className="absolute inset-1.5 rounded-xl border border-dashed border-rose-200/40 pointer-events-none" />
                         <span className="absolute bottom-1.5 font-mono text-[8px] font-black uppercase text-rose-800 tracking-widest bg-white/95 backdrop-blur-xs px-1.5 py-0.5 rounded-md border border-stone-250 shadow-3xs">
